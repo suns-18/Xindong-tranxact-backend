@@ -1,2 +1,2 @@
-# Xindong-tranxact-back-end
+# 信东金融交易平台 - 后端
 金融交易技术应用课程实验
