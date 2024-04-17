@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Xindong-tranxact-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: none
+    redis:
+      time-to-live: 60000
