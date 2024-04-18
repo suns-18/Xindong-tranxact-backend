@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @AllArgsConstructor
 @TableName("sys_user")
-@SuperBuilder
 public class SysUser {
     @TableId
     private Integer id;
