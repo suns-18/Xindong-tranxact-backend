@@ -36,8 +36,8 @@ MySQL在Windows平台大小写不敏感
 | 字段名              | 字段类型         | 约束          | 字段描述                            |
 |------------------|--------------|-------------|---------------------------------|
 | customer_name    | varchar(255) | NOT NULL    | 客户名称                            |
-| id_type          | varchar(10)  | NOT NULL    | 证件类型 （00 身份证 01 护照 02 军官证）      |
-| id_number        | varchar(255) | NOT NULL    | 证件号码                            |
+| idtf_type        | varchar(10)  | NOT NULL    | 证件类型 （00 身份证 01 护照 02 军官证）      |
+| idtf_number      | varchar(255) | NOT NULL    | 证件号码                            |
 | cuacct_cls       | int          | NOT NULL    | 资产账户类别 （0 散户；1 中户；2 大户；3 机构 ）   |
 | cuacct_status    | int          | NOT NULL    | 资产账户状态 （0 正常； 1 冻结； 8 异常； 9 注销） |
 | currency ？？      | varchar(10)  | NOT NULL    | 币种（ 0 人民币；1 港币；2 美元）            |
@@ -101,7 +101,7 @@ MySQL在Windows平台大小写不敏感
 
 | 字段名         | 字段类型           | 约束          | 字段描述                          |
 |-------------|----------------|-------------|-------------------------------|
-| id          | varchar(10)    | PRIMARY KEY | 资金账号                          |
+| id          | int            | PRIMARY KEY | 资金账号                          |
 | balance     | DECIMAL(20,4)) | NOT NULL    | 资金余额                          |
 | cuacct_cls  | int            | NOT NULL    | 资产账户类别 （0 散户；1 中户；2 大户；3 机构 ） |
 | update_time | timestamp      | NOT NULL    | 更新时间                          |
@@ -114,7 +114,7 @@ MySQL在Windows平台大小写不敏感
 
 | 字段名              | 字段类型          | 约束          | 字段描述               |
 |------------------|---------------|-------------|--------------------|
-| id               | varchar(10)   | PRIMARY KEY | 交易所证券账户            |
+| id               | int           | PRIMARY KEY | 交易所证券账户            |
 | prime_account_id | varchar(10)   | PRIMARY KEY | 资金账号               |
 | balance          | DECIMAL(20,4) | NOT NULL    | 资金余额               |
 | market           | int           | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
@@ -153,7 +153,7 @@ MySQL在Windows平台大小写不敏感
 
 | 字段名               | 字段类型           | 约束          | 字段描述                          |
 |-------------------|----------------|-------------|-------------------------------|
-| id                | varchar(10)    | PRIMARY KEY | 持仓ID                          |
+| id                | int            | PRIMARY KEY | 持仓ID                          |
 | prime_account_id  | varchar(10)    | PRIMARY KEY | 资金账号                          |
 | follow_account_id | int            | NOT NULL    | 交易所证券账户                       |
 | balance           | DECIMAL(20,4)) | NOT NULL    | 资金余额                          |
@@ -173,7 +173,7 @@ MySQL在Windows平台大小写不敏感
 
 | 字段名      | 字段类型         | 约束          | 字段描述 |
 |----------|--------------|-------------|------|
-| id       | varchar(10)  | PRIMARY KEY | 用户ID |
+| id       | int          | PRIMARY KEY | 用户ID |
 | username | varchar(255) |             | 用户名  |
-| password | varchar(10)  | NOT NULL    | 密码   |
+| password | varchar(255) | NOT NULL    | 密码   |
 
