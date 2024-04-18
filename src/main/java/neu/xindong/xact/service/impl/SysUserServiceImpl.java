@@ -7,7 +7,11 @@ import neu.xindong.xact.service.SysUserService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
+@Service
+@Repository
 public class SysUserServiceImpl
         extends ServiceImpl<SysUserMapper, SysUser>
         implements SysUserService {
