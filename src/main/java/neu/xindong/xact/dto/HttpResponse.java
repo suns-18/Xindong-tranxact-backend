@@ -4,7 +4,7 @@ public record HttpResponse<T>(
         int code, T data, String msg) {
     public static <T> HttpResponse<T> success(T data) {
         return new HttpResponse<T>(
-                200, data, "请求成功"
+                HttpStatus.OK.value(), data, "请求成功"
         );
     }
 
