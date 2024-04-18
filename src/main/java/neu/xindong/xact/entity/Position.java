@@ -15,7 +15,6 @@ public class Position {
     private Integer id;
     private Integer primeAmountId;
     private String followAccountId;
-    private Double balance;
     private String stockId;
     private Integer market;
     private Timestamp updateTime;
