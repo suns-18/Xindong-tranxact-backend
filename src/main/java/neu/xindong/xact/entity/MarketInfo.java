@@ -16,7 +16,7 @@ import org.springframework.data.redis.core.index.Indexed;
 @SuperBuilder
 public class MarketInfo {
     @Id
-    private String stockCode;
+    private String stockId;
 
     @Indexed
     private Date marketTime;
