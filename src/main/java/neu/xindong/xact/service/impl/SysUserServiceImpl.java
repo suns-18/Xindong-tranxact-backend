@@ -7,11 +7,9 @@ import neu.xindong.xact.service.SysUserService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service
-@Repository
 public class SysUserServiceImpl
         extends ServiceImpl<SysUserMapper, SysUser>
         implements SysUserService {
@@ -28,9 +26,9 @@ public class SysUserServiceImpl
                 .build();
     }
 
-    public SysUser findSysUserByUsername(String text) {
+    public SysUser findSysUserByUsername(String username) {
         return this.query()
-                .eq("username", text)
+                .eq("username", username)
                 .one();
     }
 }

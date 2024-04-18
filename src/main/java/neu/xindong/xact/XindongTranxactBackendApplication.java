@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("neu.xindong.xact.dao")
 public class XindongTranxactBackendApplication {
 
     public static void main(String[] args) {
