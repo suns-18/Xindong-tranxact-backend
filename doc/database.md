@@ -1,5 +1,5 @@
 # 数据库表设计
-  
+sys_user:admin admin  账号密码都是admin
 **数据库名：** xindong_tranxact
 
 MySQL在Windows平台大小写不敏感
@@ -149,7 +149,6 @@ MySQL在Windows平台大小写不敏感
 | id                | int            | PRIMARY KEY | 持仓ID               |
 | prime_account_id  | int            |             | 资金账号               |
 | follow_account_id | varchar(10)    | NOT NULL    | 交易所证券账户            |
-| balance           | DECIMAL(20,4)) | NOT NULL    | 资金余额               |
 | stock_id          | varchar(10)    | NOT NULL    | 证券代码               |
 | market            | int            | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
 | update_time       | timestamp      | NOT NULL    | 更新时间               |
