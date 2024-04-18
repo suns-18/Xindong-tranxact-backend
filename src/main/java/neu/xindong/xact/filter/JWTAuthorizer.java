@@ -28,9 +28,13 @@ public class JWTAuthorizer extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         String auth = request.getHeader("Authorization");
+
         DecodedJWT dJWT = util.resolveJWT(auth);
+
         if (dJWT != null) {
             UserDetails user = util.toUser(dJWT);
+
+            System.out.println(user.getUsername());
             UsernamePasswordAuthenticationToken
                     aToken =
                     new UsernamePasswordAuthenticationToken(

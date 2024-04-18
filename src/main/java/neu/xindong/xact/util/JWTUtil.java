@@ -33,8 +33,8 @@ public class JWTUtil {
         String token = convertToken(headerToken);
         if (token == null) return null;
 
-        var algorithm = Algorithm.HMAC256(key);
-        JWTVerifier verifier = JWT.require(algorithm).build();
+        JWTVerifier verifier = JWT.require(
+                Algorithm.HMAC256(key)).build();
         try {
             DecodedJWT verify = verifier.verify(token);
 
