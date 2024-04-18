@@ -2,7 +2,7 @@ spring:
   application:
     name: Xindong-tranxact-backend
   datasource:
-    url: jdbc:mysql://localhost:3306
+    url: jdbc:mysql://localhost:3306/xindong_tranxact
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
