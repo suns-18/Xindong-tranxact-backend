@@ -1,5 +1,7 @@
 package neu.xindong.xact.dto;
 
+import org.springframework.http.HttpStatus;
+
 public record HttpResponse<T>(
         int code, T data, String msg) {
     public static <T> HttpResponse<T> success(T data) {
