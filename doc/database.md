@@ -1,5 +1,7 @@
 # 数据库表设计
 
+**数据库名：** xindong_tranxact
+
 MySQL在Windows平台大小写不敏感
 
 设计数据库时，保持老师给的字典的字段名的大小写一致。
@@ -53,7 +55,7 @@ MySQL在Windows平台大小写不敏感
 | stock_name | varchar(255) | NOT NULL    | 证券名称               |
 | id         | varchar(10)  | PRIMARY KEY | 证券代码               |
 | MARKET     | int          | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
-| stk_cls    | varchar(10)  | NOT NULL    | 证券类别 （S0 股票）       |
+| stk_cls    | varchar(10)  | NOT NULL    | 证券类别 （S0股票）        |
 | stamp      | decimal(.3)  | NOT NULL    | 印花税率               |
 
 
