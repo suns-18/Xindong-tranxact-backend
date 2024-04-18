@@ -11,7 +11,6 @@ import java.util.Date;
 import org.springframework.data.redis.core.index.Indexed;
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @RedisHash("market_info")
 @SuperBuilder
 public class MarketInfo {
@@ -20,6 +19,7 @@ public class MarketInfo {
 
     @Indexed
     private Date marketTime;
+
     private Double currentPrice;
     private Double yesterdayCollectionPrice;
     private Double limitUpPrice;
