@@ -169,7 +169,7 @@ MySQL在Windows平台大小写不敏感
 
 
 
-### 9. user
+### 9. sys_user
 
 管理员信息
 
