@@ -70,7 +70,6 @@ MySQL在Windows平台大小写不敏感
 | market           | int         | NOT NULL    | 交易市场 （0 深交所；1 上交所）            |
 | stk_cls          | varchar(10) | NOT NULL    | 证券类别 （S0 股票）                  |
 | rate             | decimal(.4) | NOT NULL    | 佣金费率                          |
-| prime_account_id | int         | NOT NULL    | 主账号（资金账号）                     |
 
 
 ### 5. bank
@@ -148,7 +147,7 @@ MySQL在Windows平台大小写不敏感
 | 字段名               | 字段类型           | 约束          | 字段描述               |
 |-------------------|----------------|-------------|--------------------|
 | id                | int            | PRIMARY KEY | 持仓ID               |
-| prime_account_id  | int            | PRIMARY KEY | 资金账号               |
+| prime_account_id  | int            |             | 资金账号               |
 | follow_account_id | varchar(10)    | NOT NULL    | 交易所证券账户            |
 | balance           | DECIMAL(20,4)) | NOT NULL    | 资金余额               |
 | stock_id          | varchar(10)    | NOT NULL    | 证券代码               |
