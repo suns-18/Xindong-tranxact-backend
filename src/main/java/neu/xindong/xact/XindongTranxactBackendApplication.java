@@ -9,6 +9,7 @@ public class XindongTranxactBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(XindongTranxactBackendApplication.class, args);
+
     }
 
 }

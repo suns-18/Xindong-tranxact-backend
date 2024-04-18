@@ -80,7 +80,7 @@ MySQL在Windows平台大小写不敏感
 | 字段名         | 字段类型        | 约束          | 字段描述       |
 |-------------|-------------|-------------|------------|
 | bank_name   | varchar(10) |             | 银行名称       |
-| account     | int         | NOT NULL    | 银行账号       |
+| account     | varchar     | NOT NULL    | 银行账号       |
 | password    | int         | NOT NULL    | 密码         |
 | customer_id | int         |             | 客户代码（自动生成） |
 | id          | int         | PRIMARY KEY | 银行id       |
