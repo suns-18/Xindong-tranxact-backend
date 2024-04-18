@@ -20,7 +20,14 @@ public record HttpResponse<T>(
     }
 
     public static <T> HttpResponse<T> failureWhenAccessDB() {
-        return new HttpResponse<T>(
-                0, null, "操作失败，数据库访问错误");
+        return failure(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "操作失败，数据库访问错误");
+    }
+
+    public static <T> HttpResponse<T> unauthorized(String msg) {
+        return failure(
+                HttpStatus.FORBIDDEN.value(),
+                msg);
     }
 }
