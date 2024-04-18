@@ -15,5 +15,4 @@ public class Commission {
     private Integer market;
     private String stkCls;
     private Double rate;
-    private Integer primeAccountId;
 }

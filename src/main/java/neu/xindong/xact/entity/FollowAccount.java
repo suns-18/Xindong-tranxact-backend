@@ -14,7 +14,8 @@ public class FollowAccount {
     @TableId
     private String id;
     private Integer primeAccountId;
-    private Double balance;
+    private Double balanceTotal;
+    private Double balanceUsable;
     private Integer market;
     private Timestamp updateTime;
 }
