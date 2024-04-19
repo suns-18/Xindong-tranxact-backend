@@ -26,7 +26,8 @@ public class BankController {
             List<Bank> banks = bankService.findBankByCustomerId(customerId);
             return HttpResponse.success(banks);
         } catch (Exception e) {
-            return HttpResponse.failure(0, "数据库访问错误");
+            e.printStackTrace();
+            return HttpResponse.failureWhenAccessDB();
         }
     }
 }
