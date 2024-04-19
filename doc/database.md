@@ -103,14 +103,14 @@ MySQL在Windows平台大小写不敏感
 
 交易所证券账户（从账户缩写）
 
-| 字段名              | 字段类型           | 约束          | 字段描述               |
-|------------------|----------------|-------------|--------------------|
-| id               | varchar        | PRIMARY KEY | 交易所证券账户            |
-| prime_account_id | int            | NOT NULL    | 资金账号               |
-| balance_total    | DECIMAL(20,4)  | NOT NULL    | 资金余额               |
-| balance_usable   | DECIMAL(20,4)) | NOT NULL    | 可用余额               |
-| market           | int            | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
-| update_time      | timestamp      | NOT NULL    | 更新时间               |
+| 字段名              | 字段类型          | 约束          | 字段描述               |
+|------------------|---------------|-------------|--------------------|
+| id               | varchar       | PRIMARY KEY | 交易所证券账户            |
+| prime_account_id | int           | NOT NULL    | 资金账号               |
+| balance_total          | DECIMAL(20,4) | NOT NULL    | 资金余额               |
+| balance_usable | DECIMAL(20,4)) | NOT NULL    | 可用余额                          |
+| market           | int           | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
+| update_time      | timestamp     | NOT NULL    | 更新时间               |
 
 
 ### 8. order_info
@@ -174,7 +174,6 @@ MySQL在Windows平台大小写不敏感
 | amount            | int         |             | 成交数量            |
 | price             | decimal(.4) |             | 成交价格            |
 | transact_time     | timestamp   | NOT NULL    | 成交时间            |
-| stock_id          | varchar(10)    | NOT NULL    | 证券代码               |
 
 
 ### 11. sys_user
@@ -194,16 +193,3 @@ MySQL在Windows平台大小写不敏感
 | 字段名      | 字段类型         | 约束          | 字段描述   |
 |----------|--------------|-------------|--------|
 | id       | int          | PRIMARY KEY | 交易单元ID |
-
-
-
-### 数据库连接
-
-
-| table1        | table2               |                   |                                 |
-|---------------|----------------------|-------------------|---------------------------------|
-| customer.id   | bank.customer_id     | prime_account.id  | follow_account.prime_account_id |
-| stock.id      | order_info.stock_id  | position.stock_id | transaction.stock_id            |
-| order_info.id | transaction.order_id |                   |                                 |
-|    |                      |                   |                                 |
-|               |                      |                   |                                 |
