@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 80036 (8.0.36)
  Source Host           : localhost:3306
- Source Schema         : tranxact
+ Source Schema         : xindong_tranxact
 
  Target Server Type    : MySQL
  Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 18/04/2024 19:42:35
+ Date: 19/04/2024 20:01:16
 */
 
 SET NAMES utf8mb4;
@@ -99,9 +99,14 @@ CREATE TABLE `follow_account`  (
 -- ----------------------------
 -- Records of follow_account
 -- ----------------------------
-INSERT INTO `follow_account` VALUES ('0111111111', 11111111, 100000.0000, 1, '2024-04-18 18:42:10', NULL);
-INSERT INTO `follow_account` VALUES ('0123456789', 31355654, 50000.0000, 1, '2024-04-18 18:39:26', NULL);
-INSERT INTO `follow_account` VALUES ('0222222222', 22222222, 500000.0000, 1, '2024-04-18 18:42:34', NULL);
+INSERT INTO `follow_account` VALUES ('0111111111', 11111111, 100000.0000, 0, '2024-04-18 18:42:10', NULL);
+INSERT INTO `follow_account` VALUES ('0123456789', 31355654, 50000.0000, 0, '2024-04-18 18:39:26', NULL);
+INSERT INTO `follow_account` VALUES ('0222222222', 22222222, 500000.0000, 0, '2024-04-18 18:42:34', NULL);
+INSERT INTO `follow_account` VALUES ('0333333333', 33333333, 1000000.0000, 0, '2024-04-19 15:33:42', NULL);
+INSERT INTO `follow_account` VALUES ('A111111111', 11111111, NULL, 1, '2024-04-19 15:50:42', NULL);
+INSERT INTO `follow_account` VALUES ('A123456789', 31355654, NULL, 1, NULL, NULL);
+INSERT INTO `follow_account` VALUES ('A222222222', 22222222, NULL, 1, NULL, NULL);
+INSERT INTO `follow_account` VALUES ('B333333333', 33333333, NULL, 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for order_info
@@ -111,8 +116,8 @@ CREATE TABLE `order_info`  (
   `id` int NOT NULL,
   `unit` int NULL DEFAULT NULL,
   `prime_account_id` int NULL DEFAULT NULL,
-  `follow_account_id` int NULL DEFAULT NULL,
-  `stk_cls` int NULL DEFAULT NULL,
+  `follow_account_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `stk_cls` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `rate` decimal(20, 4) NULL DEFAULT NULL,
   `trd_id` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `stock_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -130,6 +135,8 @@ CREATE TABLE `order_info`  (
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
+INSERT INTO `order_info` VALUES (1, 22222, 31355654, '0123456789', 'S0', 0.0010, 'B', '600446', '2024-04-19 19:19:43', '0', 100, 12.8600, 100, 12.8600, 0, 0);
+INSERT INTO `order_info` VALUES (2, 33333, 11111111, 'A111111111', 'S0', 0.0010, 'S', '000858', '2024-04-19 14:57:38', '2', 1000, 136.1500, 500, 136.1600, 0, 0);
 
 -- ----------------------------
 -- Table structure for position
@@ -150,18 +157,18 @@ CREATE TABLE `position`  (
 -- ----------------------------
 -- Records of position
 -- ----------------------------
-INSERT INTO `position` VALUES (1, 31355654, '0123456789', '600446', 1, '2024-04-18 19:10:46', 1000, NULL);
-INSERT INTO `position` VALUES (2, 31355654, '0123456789', '000001', 0, '2024-04-18 19:24:22', 500, NULL);
-INSERT INTO `position` VALUES (3, 31355654, '0123456789', '000858', 0, '2024-04-18 19:25:15', 200, NULL);
-INSERT INTO `position` VALUES (4, 11111111, '0111111111', '600446', 1, '2024-04-18 19:32:44', 2000, NULL);
-INSERT INTO `position` VALUES (5, 11111111, '0111111111', '600900', 1, '2024-04-18 19:35:17', 5000, NULL);
-INSERT INTO `position` VALUES (6, 11111111, '0111111111', '000858', 0, '2024-04-18 19:35:30', 2000, NULL);
-INSERT INTO `position` VALUES (7, 22222222, '0222222222', '600446', 1, '2024-04-18 19:35:44', 20000, NULL);
-INSERT INTO `position` VALUES (8, 22222222, '0222222222', '600900', 1, '2024-04-18 19:36:10', 10000, NULL);
-INSERT INTO `position` VALUES (9, 22222222, '0222222222', '000858', 0, '2024-04-18 19:36:24', 10000, NULL);
-INSERT INTO `position` VALUES (10, 33333333, '0333333333', '600446', 1, '2024-04-18 19:36:42', 100000, NULL);
-INSERT INTO `position` VALUES (11, 33333333, '0333333333', '601857', 1, '2024-04-18 19:37:25', 100000, NULL);
-INSERT INTO `position` VALUES (12, 33333333, '0333333333', '000651', 0, '2024-04-18 19:37:45', 100000, NULL);
+INSERT INTO `position` VALUES (1, 31355654, '0123456789', '600446', 0, '2024-04-18 19:10:46', 1000, NULL);
+INSERT INTO `position` VALUES (2, 31355654, 'A123456789', '000001', 1, '2024-04-18 19:24:22', 500, NULL);
+INSERT INTO `position` VALUES (3, 31355654, 'A123456789', '000858', 1, '2024-04-18 19:25:15', 200, NULL);
+INSERT INTO `position` VALUES (4, 11111111, '0111111111', '600446', 0, '2024-04-18 19:32:44', 2000, NULL);
+INSERT INTO `position` VALUES (5, 11111111, '0111111111', '600900', 0, '2024-04-18 19:35:17', 5000, NULL);
+INSERT INTO `position` VALUES (6, 11111111, 'A111111111', '000858', 1, '2024-04-18 19:35:30', 2000, NULL);
+INSERT INTO `position` VALUES (7, 22222222, '0222222222', '600446', 0, '2024-04-18 19:35:44', 20000, NULL);
+INSERT INTO `position` VALUES (8, 22222222, '0222222222', '600900', 0, '2024-04-18 19:36:10', 10000, NULL);
+INSERT INTO `position` VALUES (9, 22222222, 'A222222222', '000858', 1, '2024-04-18 19:36:24', 10000, NULL);
+INSERT INTO `position` VALUES (10, 33333333, '0333333333', '600446', 0, '2024-04-18 19:36:42', 100000, NULL);
+INSERT INTO `position` VALUES (11, 33333333, '0333333333', '601857', 0, '2024-04-18 19:37:25', 100000, NULL);
+INSERT INTO `position` VALUES (12, 33333333, 'B333333333', '000651', 1, '2024-04-18 19:37:45', 100000, NULL);
 
 -- ----------------------------
 -- Table structure for prime_account
@@ -257,11 +264,30 @@ CREATE TABLE `transaction`  (
   `amount` int NULL DEFAULT NULL,
   `price` decimal(20, 4) NULL DEFAULT NULL,
   `transact_time` timestamp NULL DEFAULT NULL,
+  `stock_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
+
+-- ----------------------------
+-- View structure for customer_bank
+-- ----------------------------
+DROP VIEW IF EXISTS `customer_bank`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `customer_bank` AS select `bank`.`account` AS `account`,`customer`.`id` AS `id`,`customer`.`customer_name` AS `customer_name`,`customer`.`id_type` AS `id_type`,`customer`.`id_number` AS `id_number`,`customer`.`cuacct_cls` AS `cuacct_cls`,`customer`.`cuacct_status` AS `cuacct_status`,`bank`.`bank_name` AS `bank_name` from (`bank` join `customer` on((`bank`.`customer_id` = `customer`.`id`)));
+
+-- ----------------------------
+-- View structure for customer_prime_account
+-- ----------------------------
+DROP VIEW IF EXISTS `customer_prime_account`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `customer_prime_account` AS select `customer`.`id` AS `id`,`customer`.`customer_name` AS `customer_name`,`customer`.`id_type` AS `id_type`,`customer`.`id_number` AS `id_number`,`customer`.`cuacct_cls` AS `cuacct_cls`,`customer`.`cuacct_status` AS `cuacct_status`,`prime_account`.`balance_usable` AS `balance_usable`,`prime_account`.`balance_total` AS `balance_total`,`prime_account`.`update_time` AS `update_time`,`prime_account`.`password` AS `password` from (`customer` join `prime_account` on(((`customer`.`id` = `prime_account`.`id`) and (`customer`.`cuacct_cls` = `prime_account`.`cuacct_cls`))));
+
+-- ----------------------------
+-- View structure for position_resp
+-- ----------------------------
+DROP VIEW IF EXISTS `position_resp`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `position_resp` AS select `position`.`id` AS `id`,`position`.`prime_account_id` AS `prime_account_id`,`position`.`follow_account_id` AS `follow_account_id`,`position`.`stock_id` AS `stock_id`,`position`.`market` AS `market`,`position`.`update_time` AS `update_time`,`position`.`share_total` AS `share_total`,`position`.`share_usable` AS `share_usable`,`order_info`.`order_amount` AS `frozen_share_amount`,(`order_info`.`order_amount` - `order_info`.`deal_amount`) AS `unfrozen_share_amount` from (`position` join `order_info` on(((`position`.`prime_account_id` = `order_info`.`prime_account_id`) and (`position`.`follow_account_id` = `order_info`.`follow_account_id`))));
 
 SET FOREIGN_KEY_CHECKS = 1;
