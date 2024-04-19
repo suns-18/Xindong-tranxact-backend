@@ -11,8 +11,6 @@ import neu.xindong.xact.service.CommissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/commission")
 @Tag(name = "佣金接口", description = "定义佣金接口")
