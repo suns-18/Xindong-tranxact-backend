@@ -8,6 +8,7 @@ import java.util.Date;
 @SuperBuilder
 @Data
 public class SysUserAuthorize {
+    private Integer id;
     private String username;
     private String token;
     private Date expireTime;

@@ -21,4 +21,5 @@ public class Transaction {
     private Integer amount;
     private Double price;
     private Date transactTime;
+    private String stockId;
 }
