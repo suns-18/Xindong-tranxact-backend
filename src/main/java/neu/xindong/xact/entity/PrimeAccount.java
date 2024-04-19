@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("prime_account")
@@ -16,7 +16,7 @@ public class PrimeAccount {
     private Double balanceTotal;
     private Double balanceUsable;
     private Integer cuacctCls;
-    private Timestamp updateTime;
+    private Date updateTime;
     private Integer password;
 
 }

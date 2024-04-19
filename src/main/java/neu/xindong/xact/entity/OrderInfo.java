@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("order_info")
@@ -20,7 +20,7 @@ public class OrderInfo {
     private Double rate;
     private char trdId;
     private String stockId;
-    private Timestamp orderTime;
+    private Date orderTime;
     private char orderStatus;
     private Integer orderAmount;
     private Double orderPrice;

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("transaction")
@@ -20,5 +20,5 @@ public class Transaction {
     private char trdId;
     private Integer amount;
     private Double price;
-    private Timestamp transactTime;
+    private Date transactTime;
 }

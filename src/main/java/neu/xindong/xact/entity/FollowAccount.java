@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 
 @Data
 @TableName("follow_account")
@@ -17,5 +18,5 @@ public class FollowAccount {
     private Double balanceTotal;
     private Double balanceUsable;
     private Integer market;
-    private Timestamp updateTime;
+    private Date updateTime;
 }

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("position")
@@ -17,7 +17,7 @@ public class Position {
     private String followAccountId;
     private String stockId;
     private Integer market;
-    private Timestamp updateTime;
+    private Date updateTime;
     private Integer shareTotal;
     private Integer shareUsable;
 }
