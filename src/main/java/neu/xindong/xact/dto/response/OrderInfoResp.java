@@ -1,7 +1,10 @@
 package neu.xindong.xact.dto.response;
 
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
 import neu.xindong.xact.entity.OrderInfo;
-
+@SuperBuilder
+@Data
 public class OrderInfoResp {
     private OrderInfo orderInfo;//委托信息
     private Double orderBalance;//委托金额=委托数量*委托价格
