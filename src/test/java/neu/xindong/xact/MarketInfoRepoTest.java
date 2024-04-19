@@ -36,7 +36,7 @@ public class MarketInfoRepoTest {
         for (int i = 0; i < DATA_COUNT; i++) {
             list.add(generateTestData());
         }
-        list.add(MarketInfo.builder().stockCode("114514").build());
+        list.add(MarketInfo.builder().stockId("114514").build());
 
         repo.saveAll(list);
 
@@ -61,7 +61,7 @@ public class MarketInfoRepoTest {
         return MarketInfo.builder()
                 .currentPrice(randomDouble())
                 .yesterdayCollectionPrice(randomDouble())
-                .stockCode(randomString(6))
+                .stockId(randomString(6))
                 .limitUpPrice(randomDouble())
                 .limitDownPrice(randomDouble())
                 .marketTime(new Date(System.currentTimeMillis()))
