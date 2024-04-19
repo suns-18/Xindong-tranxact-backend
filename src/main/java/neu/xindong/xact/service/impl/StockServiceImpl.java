@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.StockDao;
 import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.service.StockService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class StockServiceImpl extends ServiceImpl<StockDao, Stock>
         implements StockService {
     @Override

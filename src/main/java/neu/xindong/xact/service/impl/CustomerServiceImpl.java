@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.CustomerDao;
 import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.service.CustomerService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CustomerServiceImpl extends ServiceImpl<CustomerDao, Customer>
         implements CustomerService {
 

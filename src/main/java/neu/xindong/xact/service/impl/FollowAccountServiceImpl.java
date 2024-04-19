@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.FollowAccountDao;
 import neu.xindong.xact.entity.FollowAccount;
 import neu.xindong.xact.service.FollowAccountService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class FollowAccountServiceImpl extends ServiceImpl<FollowAccountDao, FollowAccount>
         implements FollowAccountService {
     @Override

@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.PrimeAccountDao;
 import neu.xindong.xact.entity.PrimeAccount;
 import neu.xindong.xact.service.PrimeAccountService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeAccount>
         implements PrimeAccountService {
     @Override
