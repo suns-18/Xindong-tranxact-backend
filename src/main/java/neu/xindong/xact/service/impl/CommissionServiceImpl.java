@@ -11,7 +11,7 @@ public class CommissionServiceImpl extends ServiceImpl<CommissionDao, Commission
         implements CommissionService {
 
     @Override
-    public Commission findCommissionByCuacctclsAndMarket(Integer cuacctCls, Integer market) {
-        return query().eq("cuacct_cls",cuacctCls).eq("market",market).list().get(0);
+    public Commission findCommissionByCuacctclsAndMarket(Integer cuacctCls) {
+        return query().eq("cuacct_cls",cuacctCls).list().get(0);
     }
 }
