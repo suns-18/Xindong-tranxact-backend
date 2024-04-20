@@ -4,17 +4,17 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import neu.xindong.xact.entity.OrderInfo;
 
-import java.util.Date;
 @SuperBuilder
 @Data
 public class OrderRequest {
     private Integer customerId;
-    private Order Order;
-    static class Order{
-        private String followAccountId;
-        private char trdId;
-        private String stockId;
-        private Integer orderAmount;
-        private Double orderPrice;
-    }
+    private OrderInfo orderInfo;
 }
+//@Data
+//class Order{
+//    private String followAccountId;
+//    private char trdId;
+//    private String stockId;
+//    private Integer orderAmount;
+//    private Double orderPrice;
+//}

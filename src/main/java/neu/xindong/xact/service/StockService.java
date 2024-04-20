@@ -6,7 +6,7 @@ import neu.xindong.xact.entity.Stock;
 import java.util.List;
 
 public interface StockService extends IService<Stock> {
-    Stock findStockById(Integer id);
+    Stock findStockById(String id);
 
     List<Stock>findAll();
 }

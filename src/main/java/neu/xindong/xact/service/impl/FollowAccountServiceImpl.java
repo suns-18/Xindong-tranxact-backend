@@ -14,4 +14,9 @@ public class FollowAccountServiceImpl extends ServiceImpl<FollowAccountDao, Foll
     public List<FollowAccount> findFollowAccountByPrimeAccountId(Integer primeAccountId) {
         return query().eq("prime_account_id",primeAccountId).list();
     }
+
+    @Override
+    public FollowAccount findFollowAccountByPrimeAccountIdAndMarket(Integer primeAccountId, Integer market) {
+        return query().eq("prime_account_id",primeAccountId).eq("market",market).list().get(0);
+    }
 }

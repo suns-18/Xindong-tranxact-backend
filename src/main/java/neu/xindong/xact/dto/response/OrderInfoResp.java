@@ -11,5 +11,6 @@ public class OrderInfoResp {
     private Double dealBalance;//成交金额=成交数量*成交价格
     private Double frozenBalance;//冻结金额=委托金额
     private Double unfrozenBalance;//解冻金额=委托金额-成交金额
+    private String currency;
 
 }

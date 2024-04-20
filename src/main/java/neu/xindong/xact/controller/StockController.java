@@ -8,6 +8,7 @@ import neu.xindong.xact.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class StockController {
 
     @GetMapping("/getById")
     @Operation(summary = "根据id获取股票", description = "返回单个股票")
-    public HttpResponse<Stock> getStockById(Integer id) {
+    public HttpResponse<Stock> getStockById(@RequestParam String id) {
         try {
             Stock stock=stockService.findStockById(id);
             return HttpResponse.success(stock);

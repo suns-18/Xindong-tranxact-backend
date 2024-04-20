@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FollowAccountService extends IService<FollowAccount> {
     List<FollowAccount> findFollowAccountByPrimeAccountId(Integer primeAccountId);
+    FollowAccount findFollowAccountByPrimeAccountIdAndMarket(Integer primeAccountId,Integer market);
 }
