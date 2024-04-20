@@ -18,4 +18,5 @@ public class OrderRequest {
 //    private String stockId;
 //    private Integer orderAmount;
 //    private Double orderPrice;
+//    private Integer unit;
 //}
