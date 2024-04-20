@@ -16,9 +16,6 @@ public class Transaction {
     private Integer id;
     private Integer orderId;
     private Integer unit;
-    private Integer primeAccountId;
-    private String followAccountId;
-    private char trdId;
     private Integer amount;
     private Double price;
     private Date transactTime;

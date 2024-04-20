@@ -160,7 +160,7 @@ MySQL在Windows平台大小写不敏感
 ### 10. transaction
 
 成交信息（同一笔委托，成交编号不一样）
-(#成交金额=成交数量*成交价格)
+(#成交金额=成交数量*成交价格)(#prime_account_id)(#follow_account_id)(#trd_id)
 
 
 | 字段名               | 字段类型        | 约束          | 字段描述            |
