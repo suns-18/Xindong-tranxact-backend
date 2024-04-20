@@ -5,10 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.TransactionRequest;
 import neu.xindong.xact.dto.response.TransactionResp;
+import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.Transaction;
+import neu.xindong.xact.service.OrderInfoService;
+import neu.xindong.xact.service.PrimeAccountService;
 import neu.xindong.xact.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +22,10 @@ import java.util.List;
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private OrderInfoService orderInfoService;
+    @Autowired
+    private PrimeAccountService primeAccountService;
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户获取成交信息",
             description = "返回成交信息")
@@ -51,6 +57,8 @@ public class TransactionController {
                     .amount(transactionRequest.getAmount())
                     .transactTime(transactionRequest.getTransactTime())
                     .build();
+            OrderInfo orderInfo = orderInfoService.getById(transaction.getOrderId());
+            primeAccountService.changeBalanceTotalByDeal(transaction,orderInfo);
             transactionService.save(transaction);
             return HttpResponse.success();
         }catch (Exception e) {
