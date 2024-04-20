@@ -160,17 +160,13 @@ MySQL在Windows平台大小写不敏感
 ### 10. transaction
 
 成交信息（同一笔委托，成交编号不一样）
-(#成交金额=成交数量*成交价格)(#prime_account_id)(#follow_account_id)(#trd_id)
+(#成交金额=成交数量*成交价格)(#prime_account_id)(#follow_account_id)(#trd_id)(#trade_unit)
 
 
 | 字段名               | 字段类型        | 约束          | 字段描述            |
 |-------------------|-------------|-------------|-----------------|
 | id                | int         | PRIMARY KEY | 成交ID            |
 | order_id          | int         |             | 委托编号            |
-| unit              | int         |             | 交易单元            |
-| prime_account_id  | int         | NOT NULL    | 资金账号            |
-| follow_account_id | varchar(10) | NOT NULL    | 交易所证券账户         |
-| trd_id            | char        |             | 交易类别(B 买入；S 卖出) |
 | amount            | int         |             | 成交数量            |
 | price             | decimal(.4) |             | 成交价格            |
 | transact_time     | timestamp   | NOT NULL    | 成交时间            |
