@@ -1,19 +1,21 @@
 package neu.xindong.xact.controller;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.AccountRegisterRequest;
 import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.entity.FollowAccount;
+import neu.xindong.xact.entity.PrimeAccount;
 import neu.xindong.xact.service.CustomerService;
 import neu.xindong.xact.service.FollowAccountService;
+import neu.xindong.xact.service.PrimeAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
+
+import static neu.xindong.xact.util.RegisterUtil.CreateCustomerId;
+import static neu.xindong.xact.util.RegisterUtil.CreateFollowAccount;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -23,6 +25,8 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     private FollowAccountService followAccountService;
+    @Autowired
+    private PrimeAccountService primeAccountService;
     @GetMapping("/getAll") @Operation(summary = "获取所有用户",description = "返回所有用户")
     public HttpResponse<List<Customer>> findAll(){
         try{
@@ -53,28 +57,32 @@ public class CustomerController {
     public HttpResponse<Object> saveCustomer(
             @RequestBody AccountRegisterRequest accountRegisterRequest) {
         try {
-            int number = accountRegisterRequest.getFollowAccountList().size();
+
             // 使用AccountRegisterReq对象的数据创建Customer对象
             Customer customer = Customer.builder()
+                    .id(CreateCustomerId())
                     .customerName(accountRegisterRequest.getCustomerName())
                     .idType(accountRegisterRequest.getIdType())
                     .idNumber(accountRegisterRequest.getIdNumber())
                     .cuacctCls(accountRegisterRequest.getCuacctCls())
                     .cuacctStatus(accountRegisterRequest.getCuacctStatus())
                     .build();
+            PrimeAccount primeAccount = PrimeAccount.builder()
+                    .id(customer.getId())
+                    .balanceTotal(100000.0)//现在只是统一存入100000元
+                    .build();
             // 使用流式编程创建 FollowAccount 列表
             List<FollowAccount> followAccounts = accountRegisterRequest.getFollowAccountList().stream()
                     .map(followAccount -> FollowAccount.builder()
-                            .primeAccountId(customer.getId()) // 假设需要复制的字段
-                            .balanceTotal(followAccount.getBalanceTotal())
-                            .balanceUsable(followAccount.getBalanceUsable())
+                            .primeAccountId(customer.getId())
                             .market(followAccount.getMarket())
                             .updateTime(followAccount.getUpdateTime())
-                            .id(followAccount.getId())
+                            .id(CreateFollowAccount(followAccount.getMarket(),customer.getCuacctCls()))
                             .build())
                     .collect(Collectors.toList());
             followAccountService.saveBatch(followAccounts);
             customerService.save(customer);
+            primeAccountService.save(primeAccount);
             return HttpResponse.success();
         } catch (Exception e) {
             e.printStackTrace();
