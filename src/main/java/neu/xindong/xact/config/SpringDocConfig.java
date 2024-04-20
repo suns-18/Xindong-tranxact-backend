@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@SecurityScheme(type = SecuritySchemeType.HTTP, name = "JWT", scheme = "Bearer")
+//@SecurityScheme(type = SecuritySchemeType.HTTP, name = "JWT", scheme = "Bearer")
 public class SpringDocConfig {
     @Bean
     public OpenAPI openAPIConfig() {

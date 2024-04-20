@@ -58,7 +58,9 @@ public class SecurityConfiguration {
                                 ).permitAll()
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                                 .permitAll()
-                                .anyRequest().authenticated()
+
+                                .anyRequest().permitAll()
+                                //.anyRequest().authenticated()
                 )
                 .formLogin(conf -> conf
                         .loginProcessingUrl("/api/auth/login")
