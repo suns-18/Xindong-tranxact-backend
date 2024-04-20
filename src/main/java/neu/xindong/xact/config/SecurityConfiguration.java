@@ -12,9 +12,12 @@ import neu.xindong.xact.filter.JWTAuthorizer;
 import neu.xindong.xact.service.SysUserService;
 import neu.xindong.xact.util.JWTUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
@@ -45,7 +48,16 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(conf ->
                         conf
                                 .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/dev/**").permitAll()
+                                .requestMatchers(
+                                        "/dev/**",
+                                        "/API**",
+                                        "/swagger-ui/**",
+                                        "/error",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui.html"
+                                ).permitAll()
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(conf -> conf
@@ -67,9 +79,10 @@ public class SecurityConfiguration {
 
     }
 
-    public void onUnauthorized(HttpServletRequest req,
-                               HttpServletResponse resp,
-                               AuthenticationException e)
+    // Authentication-related methods
+    private void onUnauthorized(HttpServletRequest req,
+                                HttpServletResponse resp,
+                                AuthenticationException e)
             throws IOException, ServletException {
 
         resp.setContentType("application/json;charset=utf-8");
@@ -78,16 +91,15 @@ public class SecurityConfiguration {
         );
     }
 
-    public void onAuthenticationSuccess(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        Authentication authentication)
+    private void onAuthenticationSuccess(HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         Authentication authentication)
             throws IOException, ServletException {
         User user = (User) authentication.getPrincipal();
 
-        // Query for 2 times
         SysUser sysUserAccount
                 = service.findSysUserByUsername(
-                        user.getUsername());
+                user.getUsername());
 
         String token = jwtUtil.createJWT(
                 user,
@@ -110,9 +122,9 @@ public class SecurityConfiguration {
         );
     }
 
-    public void onAuthenticationFailure(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        AuthenticationException e)
+    private void onAuthenticationFailure(HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         AuthenticationException e)
             throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(
@@ -121,9 +133,9 @@ public class SecurityConfiguration {
         );
     }
 
-    public void onLogoutSuccess(HttpServletRequest request,
-                                HttpServletResponse response,
-                                Authentication authentication)
+    private void onLogoutSuccess(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 Authentication authentication)
             throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
         var writer = response.getWriter();

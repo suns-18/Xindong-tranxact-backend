@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import neu.xindong.xact.entity.OrderInfo;
 
+import java.util.Date;
 @SuperBuilder
 @Data
 public class OrderRequest {

@@ -3,6 +3,7 @@ package neu.xindong.xact.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
+import neu.xindong.xact.dto.request.OrderRequest;
 import neu.xindong.xact.dto.response.OrderInfoResp;
 import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.service.OrderInfoService;
@@ -26,6 +27,8 @@ public class OrderInfoController {
             description = "返回委托")
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountId(@RequestParam Integer primeAccountId) {
         try {
+            OrderRequest a = OrderRequest.builder().build();
+
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
             List<OrderInfoResp>orderInfoResps=new ArrayList<>();
             for(OrderInfo orderInfo:orderInfos){
