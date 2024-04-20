@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.PrimeAccountDao;
 import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.PrimeAccount;
+import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.PrimeAccountService;
 import org.springframework.stereotype.Service;
@@ -37,13 +38,13 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
 
 
 
-    public boolean changeBalanceTotalByDeal(Transaction transaction, OrderInfo orderInfo){
+    public boolean changeBalanceTotalByDeal(Transaction transaction, OrderInfo orderInfo , Stock stock){
         PrimeAccount primeAccount = getById(orderInfo.getPrimeAccountId());
         if (orderInfo.getTrdId()=='B'){//部分成交买：余额=余额-成交金额，可用不变
             primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()-transaction.getPrice()*transaction.getAmount());
-        }else {//部分成交卖，余额=余额+成交金额，可用=可用+成交金额
+        }else {//部分成交卖，余额=余额+成交金额，可用=可用+成交金额-印花税
             primeAccount.setBalanceUsable(primeAccount.getBalanceUsable()+transaction.getPrice()*transaction.getAmount());
-            primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()+transaction.getPrice()*transaction.getAmount());
+            primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()+transaction.getPrice()*transaction.getAmount()*(1+stock.getStamp()));
         }
         return updateById(primeAccount);
     }
