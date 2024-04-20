@@ -11,7 +11,7 @@ MySQL在Windows平台大小写不敏感
 - 实验指导书
 
 ## 一些笔记
-3. 枚举上交 深交；资产账户类别；资产账户状态;订单类型（10个（后端实体）
+3. 枚举上交 深交；资产账户类别；资产账户状态;委托状态（10个（后端实体）
 6. 资产账户类别（散户 中户 等）怎么确定的？
 7. market ： 数据存入redis缓存
 8. 撤单详情（T 撤单；F 正常）改为int表示布尔值
@@ -130,7 +130,7 @@ MySQL在Windows平台大小写不敏感
 | trd_id            | char        | NOT NULL    | 买卖类型  (B 买入；S 卖出) |
 | stock_id          | varchar(10) | NOT NULL    | 证券代码              |
 | order_time        | timestamp   | NOT NULL    | 订单时间              |
-| order_status      | char        | NOT NULL    | 订单类型（10个          |
+| order_status      | char        | NOT NULL    | 委托状态（10个          |
 | order_amount      | int         |             | 委托数量              |
 | order_price       | decimal(.4) |             | 委托价格              |
 | deal_amount       | int         |             | 成交数量              |
