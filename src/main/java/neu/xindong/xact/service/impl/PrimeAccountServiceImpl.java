@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.PrimeAccountDao;
 import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.PrimeAccount;
+import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.PrimeAccountService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeAccount>
@@ -16,7 +15,6 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
     public PrimeAccount findPrimeAccountByCustomerId(Integer customerId) {
         return getById(customerId);
     }
-
     @Override
     //委托买，可用=余额-委托金额-佣金
     //委托卖，可用和余额都不变，所以不实现
@@ -38,18 +36,18 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
     }
 
 
-    //部分成交买：余额=余额-成交金额，可用不变
-    public boolean reduceBalanceTotalByDeal(){
-        //你自己写
-        return false;
+
+    public boolean changeBalanceTotalByDeal(Transaction transaction, OrderInfo orderInfo){
+        PrimeAccount primeAccount = getById(orderInfo.getPrimeAccountId());
+        if (orderInfo.getTrdId()=='B'){//部分成交买：余额=余额-成交金额，可用不变
+            primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()-transaction.getPrice()*transaction.getAmount());
+        }else {//部分成交卖，余额=余额+成交金额，可用=可用+成交金额
+            primeAccount.setBalanceUsable(primeAccount.getBalanceUsable()+transaction.getPrice()*transaction.getAmount());
+            primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()+transaction.getPrice()*transaction.getAmount());
+        }
+        return updateById(primeAccount);
     }
 
-
-    //部分成交卖，余额=余额+成交金额，可用=可用+成交金额
-    public boolean increaseBalanceTotalByDeal(){
-        //你自己写
-        return false;
-    }
 
 
 }
