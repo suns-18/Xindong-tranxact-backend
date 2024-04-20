@@ -1,5 +1,6 @@
 package neu.xindong.xact.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import neu.xindong.xact.entity.OrderInfo;
@@ -7,6 +8,7 @@ import neu.xindong.xact.entity.OrderInfo;
 import java.util.Date;
 @SuperBuilder
 @Data
+@AllArgsConstructor
 public class OrderRequest {
     private Integer customerId;
     private OrderInfo orderInfo;

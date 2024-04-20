@@ -2,12 +2,14 @@ package neu.xindong.xact.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 @SuperBuilder
+@AllArgsConstructor
 @Data
 @TableName("prime_account")
 @ToString
