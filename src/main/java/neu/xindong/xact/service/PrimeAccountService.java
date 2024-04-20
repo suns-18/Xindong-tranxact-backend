@@ -7,4 +7,10 @@ import neu.xindong.xact.entity.PrimeAccount;
 public interface PrimeAccountService extends IService<PrimeAccount> {
     PrimeAccount findPrimeAccountByCustomerId(Integer customerId);
     boolean reduceBalanceUsableByOrder(OrderInfo orderInfo);
+
+    boolean increaseBalanceUsableByOrder(OrderInfo orderInfo);
+
+    boolean reduceBalanceTotalByDeal();
+
+    boolean increaseBalanceTotalByDeal();
 }

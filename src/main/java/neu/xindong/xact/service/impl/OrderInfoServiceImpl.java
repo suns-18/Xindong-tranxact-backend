@@ -28,4 +28,11 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
         orderInfo.setIsWithdraw(0);
         return save(orderInfo);
     }
+
+    @Override
+    public boolean withdrawOrder(OrderInfo orderInfo) {
+        orderInfo.setIsWithdraw(1);
+        orderInfo.setWithdrawAmount(orderInfo.getOrderAmount());
+        return updateById(orderInfo);
+    }
 }

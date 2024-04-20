@@ -57,7 +57,7 @@ public class OrderInfoController {
     @GetMapping("/doOrder")
     @Operation(summary = "做委托",
             description = "作委托")
-    public HttpResponse<Object> getOrderInfoByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
+    public HttpResponse<Object> doOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
         try {
             Stock stock = stockService.findStockById(orderRequest.getOrderInfo().getStockId());
             Customer customer = customerService.findCustomerById(orderRequest.getCustomerId());
@@ -74,7 +74,24 @@ public class OrderInfoController {
                     .orderPrice(orderRequest.getOrderInfo().getOrderPrice())
                     .build();
             orderInfoService.doOrder(orderInfo);
-            primeAccountService.reduceBalanceUsableByOrder(orderInfo);
+            if(orderRequest.getOrderInfo().getTrdId()=='B')
+                primeAccountService.reduceBalanceUsableByOrder(orderInfo);
+            return HttpResponse.success();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failure(0, "数据库访问错误");
+        }
+    }
+
+    @GetMapping("/withdrawOrder")
+    @Operation(summary = "撤销委托",
+            description = "撤销委托")
+    public HttpResponse<Object> withdrawOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
+        try {
+            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
+            orderInfoService.withdrawOrder(orderInfo);
+            if(orderRequest.getOrderInfo().getTrdId()=='B')
+                primeAccountService.increaseBalanceUsableByOrder(orderInfo);
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();
