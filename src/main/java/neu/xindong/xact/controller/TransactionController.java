@@ -6,9 +6,11 @@ import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.TransactionRequest;
 import neu.xindong.xact.dto.response.TransactionResp;
 import neu.xindong.xact.entity.OrderInfo;
+import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.OrderInfoService;
 import neu.xindong.xact.service.PrimeAccountService;
+import neu.xindong.xact.service.StockService;
 import neu.xindong.xact.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,8 @@ public class TransactionController {
     private OrderInfoService orderInfoService;
     @Autowired
     private PrimeAccountService primeAccountService;
+    @Autowired
+    private StockService stockService;
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户获取成交信息",
             description = "返回成交信息")
@@ -58,7 +62,8 @@ public class TransactionController {
                     .transactTime(transactionRequest.getTransactTime())
                     .build();
             OrderInfo orderInfo = orderInfoService.getById(transaction.getOrderId());
-            primeAccountService.changeBalanceTotalByDeal(transaction,orderInfo);
+            Stock stock = stockService.getById(transaction.getStockId());
+            primeAccountService.changeBalanceTotalByDeal(transaction,orderInfo,stock);
             transactionService.save(transaction);
             return HttpResponse.success();
         }catch (Exception e) {
