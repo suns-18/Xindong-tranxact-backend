@@ -5,13 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.OrderRequest;
 import neu.xindong.xact.dto.response.OrderInfoResp;
-import neu.xindong.xact.entity.OrderInfo;
-import neu.xindong.xact.service.OrderInfoService;
+import neu.xindong.xact.entity.*;
+import neu.xindong.xact.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +19,31 @@ import java.util.List;
 public class OrderInfoController {
     @Autowired
     private OrderInfoService orderInfoService;
+    @Autowired
+    private StockService stockService;
+    @Autowired
+    private CommissionService commissionService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private PrimeAccountService primeAccountService;
+
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户获取委托",
             description = "返回委托")
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountId(@RequestParam Integer primeAccountId) {
         try {
-            OrderRequest a = OrderRequest.builder().build();
-
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
             List<OrderInfoResp>orderInfoResps=new ArrayList<>();
             for(OrderInfo orderInfo:orderInfos){
+                Stock stock=stockService.findStockById(orderInfo.getStockId());
                 OrderInfoResp orderInfoResp=OrderInfoResp.builder()
                         .orderInfo(orderInfo)
                         .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
                         .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
                         .frozenBalance(orderInfo.getOrderPrice())
                         .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
+                        .currency(stock.getCurrency())
                         .build();
                 orderInfoResps.add(orderInfoResp);
             }
@@ -45,6 +51,34 @@ public class OrderInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
+        }
+    }
+
+    @GetMapping("/doOrder")
+    @Operation(summary = "做委托",
+            description = "作委托")
+    public HttpResponse<Object> getOrderInfoByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
+        try {
+            Stock stock = stockService.findStockById(orderRequest.getOrderInfo().getStockId());
+            Customer customer = customerService.findCustomerById(orderRequest.getCustomerId());
+            Commission commission = commissionService.findCommissionByCuacctclsAndMarket(customer.getCuacctCls());
+            OrderInfo orderInfo = OrderInfo.builder()
+                    .unit(orderRequest.getOrderInfo().getUnit())
+                    .primeAccountId(orderRequest.getCustomerId())
+                    .followAccountId(orderRequest.getOrderInfo().getFollowAccountId())
+                    .stkCls(stock.getStkCls())
+                    .rate(commission.getRate())
+                    .trdId(orderRequest.getOrderInfo().getTrdId())
+                    .stockId(stock.getId())
+                    .orderAmount(orderRequest.getOrderInfo().getOrderAmount())
+                    .orderPrice(orderRequest.getOrderInfo().getOrderPrice())
+                    .build();
+            orderInfoService.doOrder(orderInfo);
+            primeAccountService.reduceBalanceUsableByOrder(orderInfo);
+            return HttpResponse.success();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failure(0, "数据库访问错误");
         }
     }
 

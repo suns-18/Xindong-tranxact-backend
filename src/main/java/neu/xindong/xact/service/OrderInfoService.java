@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderInfoService extends IService<OrderInfo> {
     List<OrderInfo> findOrderInfoByPrimeAccountId(Integer primeAccountId);
+
+    boolean doOrder(OrderInfo orderInfo);
 }
