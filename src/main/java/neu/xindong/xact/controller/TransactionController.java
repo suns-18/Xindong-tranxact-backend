@@ -37,13 +37,20 @@ public class TransactionController {
         try {
             List<Transaction> transactions = transactionService.findTranscationByPrimeAccountId(primeAccountId);
             List<TransactionResp>transactionResps=new ArrayList<>();
-            for(Transaction transaction:transactions){
-                TransactionResp transactionResp=TransactionResp.builder()
+//            for(Transaction transaction:transactions){
+//                TransactionResp transactionResp=TransactionResp.builder()
+//                        .transaction(transaction)
+//                        .transactionBalance(transaction.getAmount()*transaction.getPrice())
+//                        .build();
+//                transactionResps.add(transactionResp);
+//            }
+            transactions.forEach(transaction -> {
+                var transactionResp=TransactionResp.builder()
                         .transaction(transaction)
                         .transactionBalance(transaction.getAmount()*transaction.getPrice())
                         .build();
                 transactionResps.add(transactionResp);
-            }
+            });
             return HttpResponse.success(transactionResps);
         } catch (Exception e) {
             e.printStackTrace();

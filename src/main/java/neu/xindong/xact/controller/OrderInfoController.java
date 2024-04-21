@@ -35,9 +35,21 @@ public class OrderInfoController {
         try {
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
             List<OrderInfoResp>orderInfoResps=new ArrayList<>();
-            for(OrderInfo orderInfo:orderInfos){
+//            for(OrderInfo orderInfo:orderInfos){
+//                Stock stock=stockService.findStockById(orderInfo.getStockId());
+//                OrderInfoResp orderInfoResp=OrderInfoResp.builder()
+//                        .orderInfo(orderInfo)
+//                        .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
+//                        .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
+//                        .frozenBalance(orderInfo.getOrderPrice())
+//                        .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
+//                        .currency(stock.getCurrency())
+//                        .build();
+//                orderInfoResps.add(orderInfoResp);
+//            }
+            orderInfos.forEach((orderInfo -> {
                 Stock stock=stockService.findStockById(orderInfo.getStockId());
-                OrderInfoResp orderInfoResp=OrderInfoResp.builder()
+                var orderInfoResp=OrderInfoResp.builder()
                         .orderInfo(orderInfo)
                         .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
                         .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
@@ -46,7 +58,7 @@ public class OrderInfoController {
                         .currency(stock.getCurrency())
                         .build();
                 orderInfoResps.add(orderInfoResp);
-            }
+            }));
             return HttpResponse.success(orderInfoResps);
         } catch (Exception e) {
             e.printStackTrace();
