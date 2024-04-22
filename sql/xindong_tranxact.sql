@@ -89,10 +89,10 @@ DROP TABLE IF EXISTS `follow_account`;
 CREATE TABLE `follow_account`  (
   `id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `prime_account_id` int NULL DEFAULT NULL,
-  `balance` decimal(20, 4) NULL DEFAULT NULL,
+  `balance_total` decimal(20, 4) NULL DEFAULT NULL,
   `market` int NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL,
-  ` balance_usable` decimal(20, 4) NULL DEFAULT NULL,
+  `balance_usable` decimal(20, 4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
