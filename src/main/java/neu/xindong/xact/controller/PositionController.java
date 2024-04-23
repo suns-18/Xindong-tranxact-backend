@@ -46,16 +46,37 @@ public class PositionController {
                 int unfrozenShareAmount = position.getShareTotal(); // 假设初始解冻数量为持仓总数
                 if (relatedOrderInfos != null) {
                     for (OrderInfo orderInfo : relatedOrderInfos) {
-                        // 未成交 '0', 撤单 '6', 部分成交 '7', 全部成交 '8'
+                        // 未成交 '0',已报 '2' 撤单 '6', 部分成交 '7', 全部成交 '8'
                         switch (orderInfo.getOrderStatus()) {
                             case '0': // 未成交
+                            case '2': //已报
+                                frozenShareAmount += orderInfo.getOrderAmount();//买股票，冻结股票数量改变但是可用没改总数也没改
+                                if (orderInfo.getTrdId()=='S'){//买股票的话，开始冻结，且可用变少，总的不变
+                                    position.setShareUsable(position.getShareUsable()-orderInfo.getOrderAmount());
+                                }
+                                break;
                             case '6': // 撤单
-                                // 对于未成交或撤单的委托，不增加冻结数量
+                                // 对于撤单的委托，不增加冻结数量
+                                frozenShareAmount = 0;
+                                if (orderInfo.getTrdId()=='B'){
+                                    position.setShareUsable(position.getShareUsable()+orderInfo.getOrderAmount());
+                                    position.setShareTotal(position.getShareTotal()+orderInfo.getOrderAmount());
+                                }else {
+                                    position.setShareUsable(position.getShareUsable()-orderInfo.getOrderAmount());
+                                    position.setShareTotal(position.getShareTotal()-orderInfo.getOrderAmount());
+                                }
                                 break;
                             case '7': // 部分成交
+                                frozenShareAmount=orderInfo.getOrderAmount()-orderInfo.getDealAmount();
                             case '8': // 全部成交
-                                // 对于部分成交或全部成交的委托，计算冻结数量
-                                frozenShareAmount += orderInfo.getOrderAmount();
+                                // 对于部分成交或全部成交的委托，按照交易类型直接改变总股份数值。可用股份的话因为已经成交了，所以直接改变
+                                if (orderInfo.getTrdId()=='B'){
+                                    position.setShareUsable(position.getShareUsable()+orderInfo.getDealAmount());
+                                    position.setShareTotal(position.getShareTotal()+orderInfo.getDealAmount());
+                                }else {
+                                    position.setShareUsable(position.getShareUsable()-orderInfo.getDealAmount());
+                                    position.setShareTotal(position.getShareTotal()-orderInfo.getDealAmount());
+                                }
                                 break;
                             default:
                                 break;
