@@ -103,14 +103,14 @@ MySQL在Windows平台大小写不敏感
 
 交易所证券账户（从账户缩写）
 
-| 字段名              | 字段类型          | 约束          | 字段描述               |
-|------------------|---------------|-------------|--------------------|
-| id               | varchar       | PRIMARY KEY | 交易所证券账户            |
-| prime_account_id | int           | NOT NULL    | 资金账号               |
-| balance_total          | DECIMAL(20,4) | NOT NULL    | 资金余额               |
-| balance_usable | DECIMAL(20,4)) | NOT NULL    | 可用余额                          |
-| market           | int           | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
-| update_time      | timestamp     | NOT NULL    | 更新时间               |
+| 字段名              | 字段类型           | 约束          | 字段描述               |
+|------------------|----------------|-------------|--------------------|
+| id               | varchar        | PRIMARY KEY | 交易所证券账户            |
+| prime_account_id | int            | NOT NULL    | 资金账号               |
+| balance_total    | DECIMAL(20,4)  | NOT NULL    | 资金余额               |
+| balance_usable   | DECIMAL(20,4)) | NOT NULL    | 可用余额               |
+| market           | int            | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
+| update_time      | timestamp      | NOT NULL    | 更新时间               |
 
 
 ### 8. order_info
