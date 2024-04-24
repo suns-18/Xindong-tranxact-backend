@@ -1,4 +1,5 @@
 package neu.xindong.xact.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
@@ -11,6 +12,7 @@ import neu.xindong.xact.service.FollowAccountService;
 import neu.xindong.xact.service.PrimeAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,12 +29,14 @@ public class CustomerController {
     private FollowAccountService followAccountService;
     @Autowired
     private PrimeAccountService primeAccountService;
-    @GetMapping("/getAll") @Operation(summary = "获取所有用户",description = "返回所有用户")
-    public HttpResponse<List<Customer>> findAll(){
-        try{
-            List<Customer> customers=customerService.findAll();
+
+    @GetMapping("/getAll")
+    @Operation(summary = "获取所有用户", description = "返回所有用户")
+    public HttpResponse<List<Customer>> findAll() {
+        try {
+            List<Customer> customers = customerService.findAll();
             return HttpResponse.success(customers);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
         }
@@ -40,16 +44,27 @@ public class CustomerController {
 
 
     @GetMapping("/getById")
-    @Operation(summary = "根据id获取用户", description = "返回用户")
+    @Operation(summary = "根据id获取用户", description = "返回指定id的用户")
     public HttpResponse<Customer> getCustomerById(Integer id) {
         try {
-            Customer customer=customerService.findCustomerById(id);
+            Customer customer = customerService.findCustomerById(id);
             return HttpResponse.success(customer);
         } catch (Exception e) {
-            return HttpResponse.failure(0, "数据库访问错误");
+            return HttpResponse.failureWhenAccessDB();
         }
 
     }
+
+    @GetMapping("/getLikeId")
+    @Operation(summary = "根据id模糊查询用户", description = "返回满足模糊匹配原则的id对应用户")
+    public HttpResponse<List<Customer>> getCustomerLikeId(Integer id) {
+        try {
+            return HttpResponse.success(customerService.findCustomerLikeId(id));
+        } catch (Exception e) {
+            return HttpResponse.failureWhenAccessDB();
+        }
+    }
+
     @PostMapping("/save")
     @Operation(summary = "保存客户",
             description = "输入客户的信息，提交到服务器，返回提交操作的结果")
@@ -61,11 +76,11 @@ public class CustomerController {
             // 使用AccountRegisterReq对象的数据创建Customer对象
             Customer customer = Customer.builder()
                     .id(CreateCustomerId())
-                    .customerName(accountRegisterRequest.getCustomerName())
-                    .idType(accountRegisterRequest.getIdType())
-                    .idNumber(accountRegisterRequest.getIdNumber())
-                    .cuacctCls(accountRegisterRequest.getCuacctCls())
-                    .cuacctStatus(accountRegisterRequest.getCuacctStatus())
+                    .customerName(accountRegisterRequest.getCustomer().getCustomerName())
+                    .idType(accountRegisterRequest.getCustomer().getIdType())
+                    .idNumber(accountRegisterRequest.getCustomer().getIdNumber())
+                    .cuacctCls(accountRegisterRequest.getCustomer().getCuacctCls())
+                    .cuacctStatus(accountRegisterRequest.getCustomer().getCuacctStatus())
                     .build();
             PrimeAccount primeAccount = PrimeAccount.builder()
                     .id(customer.getId())
@@ -77,7 +92,7 @@ public class CustomerController {
                             .primeAccountId(customer.getId())
                             .market(followAccount.getMarket())
                             .updateTime(followAccount.getUpdateTime())
-                            .id(CreateFollowAccount(followAccount.getMarket(),customer.getCuacctCls()))
+                            .id(CreateFollowAccount(followAccount.getMarket(), customer.getCuacctCls()))
                             .build())
                     .collect(Collectors.toList());
             followAccountService.saveBatch(followAccounts);
@@ -86,8 +101,7 @@ public class CustomerController {
             return HttpResponse.success();
         } catch (Exception e) {
             e.printStackTrace();
-            return HttpResponse.failure(
-                    0, "操作失败，数据库访问错误");
+            return HttpResponse.failureWhenAccessDB();
         }
     }
 
