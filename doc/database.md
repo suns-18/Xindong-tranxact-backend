@@ -30,7 +30,7 @@ MySQL在Windows平台大小写不敏感
 | id_number        | varchar(255) | NOT NULL    | 证件号码                            |
 | cuacct_cls       | int          | NOT NULL    | 资产账户类别 （0 散户；1 中户；2 大户；3 机构 ）   |
 | cuacct_status    | int          | NOT NULL    | 资产账户状态 （0 正常； 1 冻结； 8 异常； 9 注销） |
-| id            ~~ | int          | PRIMARY KEY | 客户代码（自动生成）~~                    |
+| id            ~~ | nt           | PRIMARY KEY | 客户代码（自动生成）~~                    |
 
 ### 2. stock
 
@@ -92,8 +92,8 @@ MySQL在Windows平台大小写不敏感
 | 字段名            | 字段类型           | 约束          | 字段描述                          |
 |----------------|----------------|-------------|-------------------------------|
 | id             | int            | PRIMARY KEY | 资金账号                          |
-| balance_total  | DECIMAL(20,4)) | NOT NULL    | 资金余额                          |
-| balance_usable | DECIMAL(20,4)) | NOT NULL    | 可用余额                          |
+| balance_total  | DECIMAL(20,4)  | NOT NULL    | 资金余额                          |
+| balance_usable | DECIMAL(20,4)2 | NOT NULL    | 可用余额                          |
 | cuacct_cls     | int            | NOT NULL    | 资产账户类别 （0 散户；1 中户；2 大户；3 机构 ） |
 | update_time    | timestamp      | NOT NULL    | 更新时间                          |
 | password       | int            | NOT NULL    | 密码                            |
@@ -108,7 +108,7 @@ MySQL在Windows平台大小写不敏感
 | id               | varchar        | PRIMARY KEY | 交易所证券账户            |
 | prime_account_id | int            | NOT NULL    | 资金账号               |
 | balance_total    | DECIMAL(20,4)  | NOT NULL    | 资金余额               |
-| balance_usable   | DECIMAL(20,4)) | NOT NULL    | 可用余额               |
+| balance_usable   | DECIMAL(20,4)  | NOT NULL    | 可用余额               |
 | market           | int            | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
 | update_time      | timestamp      | NOT NULL    | 更新时间               |
 

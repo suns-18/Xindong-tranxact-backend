@@ -20,4 +20,9 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerDao, Customer>
     public Customer findCustomerById(Integer id) {
         return getById(id);
     }
+
+    @Override
+    public List<Customer> findCustomerLikeId(Integer id) {
+        return query().like("id", id).list();
+    }
 }
