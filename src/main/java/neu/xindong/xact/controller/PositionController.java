@@ -48,7 +48,6 @@ public class PositionController {
                     for (OrderInfo orderInfo : relatedOrderInfos) {
                         // 未成交 '0',已报 '2' 撤单 '6', 部分成交 '7', 全部成交 '8'
                         switch (orderInfo.getOrderStatus()) {
-                            case '0': // 未成交
                             case '2': //已报
                                 frozenShareAmount += orderInfo.getOrderAmount();//买股票，冻结股票数量改变但是可用没改总数也没改
                                 if (orderInfo.getTrdId()=='S'){//买股票的话，开始冻结，且可用变少，总的不变
