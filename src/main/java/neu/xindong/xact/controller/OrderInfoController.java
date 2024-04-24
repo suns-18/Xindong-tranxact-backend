@@ -27,6 +27,8 @@ public class OrderInfoController {
     private CustomerService customerService;
     @Autowired
     private PrimeAccountService primeAccountService;
+    @Autowired
+    private PositionService positionService;
 
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户获取委托",
@@ -48,7 +50,7 @@ public class OrderInfoController {
 //                orderInfoResps.add(orderInfoResp);
 //            }
             orderInfos.forEach((orderInfo -> {
-                Stock stock=stockService.findStockById(orderInfo.getStockId());
+                Stock stock=stockService.getById(orderInfo.getStockId());
                 var orderInfoResp=OrderInfoResp.builder()
                         .orderInfo(orderInfo)
                         .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
@@ -71,9 +73,10 @@ public class OrderInfoController {
             description = "作委托")
     public HttpResponse<Object> doOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
         try {
-            Stock stock = stockService.findStockById(orderRequest.getOrderInfo().getStockId());
+            Stock stock = stockService.getById(orderRequest.getOrderInfo().getStockId());
             Customer customer = customerService.findCustomerById(orderRequest.getCustomerId());
             Commission commission = commissionService.findCommissionByCuacctclsAndMarket(customer.getCuacctCls());
+            Position position=positionService.findPositionByStockId(stock.getId());
             OrderInfo orderInfo = OrderInfo.builder()
                     .unit(orderRequest.getOrderInfo().getUnit())
                     .primeAccountId(orderRequest.getCustomerId())
@@ -87,6 +90,7 @@ public class OrderInfoController {
                     .build();
             orderInfoService.doOrder(orderInfo);
             primeAccountService.reduceBalanceUsableByOrder(orderInfo);
+            if(orderInfo.getTrdId()=='S')positionService.reduceShareByOrder(position,orderInfo);
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();
@@ -100,9 +104,10 @@ public class OrderInfoController {
     public HttpResponse<Object> withdrawOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
         try {
             OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
+            Position position=positionService.findPositionByStockId(orderInfo.getStockId());
             orderInfoService.withdrawOrder(orderInfo);
-            if(orderRequest.getOrderInfo().getTrdId()=='B')
-                primeAccountService.increaseBalanceUsableByOrder(orderInfo);
+            primeAccountService.increaseBalanceUsableByOrder(orderInfo);
+            if(orderRequest.getOrderInfo().getTrdId()=='S')positionService.increaseShareByOrder(position);
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();

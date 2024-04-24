@@ -13,11 +13,6 @@ public class StockServiceTest {
     @Autowired
     private StockServiceImpl stockService;
     @Test
-    public void findStockByIdTest(){
-        Stock stock=stockService.findStockById("000001");
-        System.out.println(stock.toString());
-    }
-    @Test
     public void findAllTest(){
         List<Stock>stocks=stockService.findAll();
         stocks.stream().forEach(System.out::println);

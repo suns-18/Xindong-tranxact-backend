@@ -47,7 +47,7 @@ public class FollowAccountController {
     public HttpResponse<AccountsResp> getAccountsByCustomerAndStock(@RequestBody OrderRequest orderRequest){
         try {
             PrimeAccount primeAccount=primeAccountService.findPrimeAccountByCustomerId(orderRequest.getCustomerId());
-            int market=stockService.findStockById(orderRequest.getOrderInfo().getStockId()).getMarket();
+            int market=stockService.getById(orderRequest.getOrderInfo().getStockId()).getMarket();
             FollowAccount followAccount=followAccountService.findFollowAccountByPrimeAccountIdAndMarket(orderRequest.getCustomerId(),market);
             AccountsResp accountsResp=AccountsResp.builder().
                     primeAccount(primeAccount).

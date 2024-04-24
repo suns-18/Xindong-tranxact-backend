@@ -6,9 +6,11 @@ import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.TransactionRequest;
 import neu.xindong.xact.dto.response.TransactionResp;
 import neu.xindong.xact.entity.OrderInfo;
+import neu.xindong.xact.entity.Position;
 import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.*;
+import neu.xindong.xact.util.RegisterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,21 +58,29 @@ public class TransactionController {
             return HttpResponse.failureWhenAccessDB();
         }
     }
-    @PostMapping("/saveTransaction")
-    @Operation(summary = "保存成交信息",
-            description = "输入成交的信息，提交到服务器，返回提交操作的结果")
-    public HttpResponse<Object> saveTransaction(
+    @PostMapping("/doTransaction")
+    @Operation(summary = "做成交",
+            description = "做成交")
+    public HttpResponse<Object> doTransaction(
             @RequestBody TransactionRequest transactionRequest){
         try {
+            OrderInfo orderInfo=orderInfoService.getById(transactionRequest.getOrderInfo().getId());
+            Stock stock=stockService.getById(orderInfo.getStockId());
+            Position position=positionService.findPositionByStockId(stock.getId());
+
             Transaction transaction = Transaction.builder()
                     .price(transactionRequest.getPrice())
                     .amount(transactionRequest.getAmount())
-                    .transactTime(transactionRequest.getTransactTime())
                     .build();
-            OrderInfo orderInfo = orderInfoService.getById(transaction.getOrderId());
-            Stock stock = stockService.getById(transaction.getStockId());
+            transactionService.doDeal(transaction,orderInfo);
+
             primeAccountService.changeBalanceTotalByDeal(transaction,orderInfo,stock);
-            transactionService.save(transaction);
+            //成交买
+            if(orderInfo.getTrdId()=='B'){
+                positionService.increaseShareByDeal(position,stock,orderInfo,transaction);
+            }else{//成交卖
+                positionService.reduceShareByDeal(position,transaction);
+            }
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();

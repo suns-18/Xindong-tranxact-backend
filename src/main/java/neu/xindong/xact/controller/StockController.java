@@ -36,7 +36,7 @@ public class StockController {
     @Operation(summary = "根据id获取股票", description = "返回单个股票")
     public HttpResponse<Stock> getStockById(@RequestParam String id) {
         try {
-            Stock stock=stockService.findStockById(id);
+            Stock stock=stockService.getById(id);
             return HttpResponse.success(stock);
         } catch (Exception e) {
             return HttpResponse.failure(0, "数据库访问错误");

@@ -5,6 +5,7 @@ import neu.xindong.xact.dao.PositionDao;
 import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.Position;
 import neu.xindong.xact.entity.Stock;
+import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.PositionService;
 import neu.xindong.xact.util.RegisterUtil;
 import org.springframework.stereotype.Service;
@@ -20,37 +21,52 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     }
 
     @Override
-    public boolean makePosition(Position position) {
-        position.setId(RegisterUtil.CreateOrderId());
-        position.setUpdateTime(new Date());
-        position.setShareTotal(0);
-        position.setShareUsable(0);
-        return save(position);
+    public Position findPositionByStockId(String stockId){
+        return query().eq("stock_id",stockId).list().get(0);
     }
+
 
     @Override
     //委托买  不实现
     //委托卖 冻结股票 可用=余额-委托数量 余额不变
-    public boolean reduceShareByOrder(Position position) {
-        return false;
+    public boolean reduceShareByOrder(Position position,OrderInfo orderInfo) {
+        position.setShareTotal(position.getShareTotal()-orderInfo.getOrderAmount());
+        position.setUpdateTime(new Date());
+        return updateById(position);
     }
 
     @Override
     //撤单买 不实现
     //撤单卖 可用=余额 余额不变
     public boolean increaseShareByOrder(Position position) {
-        return false;
+        position.setShareTotal(position.getShareTotal());
+        position.setUpdateTime(new Date());
+        return updateById(position);
     }
 
     @Override
     //成交买 余额=余额+成交 可用=可用+成交
-    public boolean increaseShareByDeal(Position position) {
-        return false;
+    public boolean increaseShareByDeal(Position position, Stock stock, OrderInfo orderInfo, Transaction transaction) {
+        if(position.getId()==null){//之前没买过
+            position.setId(RegisterUtil.CreateOrderId());
+            position.setPrimeAmountId(orderInfo.getPrimeAccountId());
+            position.setFollowAccountId(orderInfo.getFollowAccountId());
+            position.setMarket(stock.getMarket());
+            position.setShareTotal(transaction.getAmount());
+            position.setShareUsable(transaction.getAmount());
+        }else{//之前买过
+            position.setShareTotal(position.getShareTotal()+transaction.getAmount());
+            position.setShareUsable(position.getShareUsable()+transaction.getAmount());
+        }
+        position.setUpdateTime(new Date());
+        return saveOrUpdate(position);
     }
 
     @Override
     //成交卖 余额=余额-成交 可用不变
-    public boolean reduceShareByDeal(Position position) {
-        return false;
+    public boolean reduceShareByDeal(Position position, Transaction transaction) {
+        position.setShareTotal(position.getShareTotal()+transaction.getAmount());
+        position.setUpdateTime(new Date());
+        return updateById(position);
     }
 }

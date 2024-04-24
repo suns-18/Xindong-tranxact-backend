@@ -39,7 +39,9 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
     //撤销卖，可用和余额都不变，所以不实现
     public boolean increaseBalanceUsableByOrder(OrderInfo orderInfo) {
         PrimeAccount primeAccount=getById(orderInfo.getPrimeAccountId());
-        primeAccount.setBalanceUsable(primeAccount.getBalanceUsable()+orderInfo.getOrderAmount()*orderInfo.getOrderPrice());
+        if(orderInfo.getTrdId()=='B'){
+            primeAccount.setBalanceUsable(primeAccount.getBalanceUsable()+orderInfo.getOrderAmount()*orderInfo.getOrderPrice());
+        }
         return updateById(primeAccount);
     }
 
