@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class StockServiceImpl extends ServiceImpl<StockDao, Stock>
         implements StockService {
-    @Override
     public Stock findStockById(String id) {
         return getById(id);
     }
