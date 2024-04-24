@@ -20,6 +20,7 @@ public class TransactionServiceImpl extends ServiceImpl<TransactionDao, Transact
 
     @Override
     public boolean doDeal(Transaction transaction, OrderInfo orderInfo) {
+        //
         transaction.setId(RegisterUtil.CreateOrderId());
         transaction.setOrderId(orderInfo.getId());
         transaction.setTransactTime(new Date());

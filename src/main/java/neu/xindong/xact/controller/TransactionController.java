@@ -73,8 +73,10 @@ public class TransactionController {
                     .amount(transactionRequest.getAmount())
                     .build();
             transactionService.doDeal(transaction,orderInfo);
-
-            primeAccountService.changeBalanceTotalByDeal(transaction,orderInfo,stock);
+            //改完之后要重新读取
+            Transaction transaction2=transactionService.getById(transaction.getId());
+            primeAccountService.changeBalanceTotalByDeal(transaction2,orderInfo,stock);
+            orderInfoService.updateOrderInfoByDeal(orderInfo,transaction2);
             //成交买
             if(orderInfo.getTrdId()=='B'){
                 positionService.increaseShareByDeal(position,stock,orderInfo,transaction);

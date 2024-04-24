@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.OrderInfoDao;
 import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.Stock;
+import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.OrderInfoService;
 import neu.xindong.xact.util.RegisterUtil;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
         orderInfo.setIsWithdraw(1);
         orderInfo.setOrderStatus('6');
         orderInfo.setWithdrawAmount(orderInfo.getOrderAmount());
+        return updateById(orderInfo);
+    }
+
+    @Override
+    public boolean updateOrderInfoByDeal(OrderInfo orderInfo, Transaction transaction) {
+        orderInfo.setDealAmount(transaction.getAmount());
+        orderInfo.setDealPrice(transaction.getPrice());
         return updateById(orderInfo);
     }
 }
