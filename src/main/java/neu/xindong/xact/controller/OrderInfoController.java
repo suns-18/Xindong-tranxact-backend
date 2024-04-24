@@ -86,8 +86,7 @@ public class OrderInfoController {
                     .orderPrice(orderRequest.getOrderInfo().getOrderPrice())
                     .build();
             orderInfoService.doOrder(orderInfo);
-            if(orderRequest.getOrderInfo().getTrdId()=='B')
-                primeAccountService.reduceBalanceUsableByOrder(orderInfo);
+            primeAccountService.reduceBalanceUsableByOrder(orderInfo);
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();

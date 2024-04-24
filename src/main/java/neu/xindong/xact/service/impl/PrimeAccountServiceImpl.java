@@ -17,6 +17,7 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
         return getById(customerId);
     }
     @Override
+    //委托 更改资金
     //委托买，可用=可用余额-委托金额-佣金
     //委托卖，可用=可用-佣金
     public boolean reduceBalanceUsableByOrder(OrderInfo orderInfo) {
@@ -31,15 +32,9 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
         }
         return updateById(primeAccount);
     }
-    @Override
-    //委托买，可用=余额-委托金额-佣金
-    //委托卖，可用和余额都不变，所以不实现
-    public boolean reduceShareUsableByOrder(OrderInfo orderInfo){
-        PrimeAccount primeAccount=getById(orderInfo.getPrimeAccountId());
-        return false;
-    }
 
     @Override
+    //撤单 更改资金
     //全部撤销买，可用=余额+委托金额
     //撤销卖，可用和余额都不变，所以不实现
     public boolean increaseBalanceUsableByOrder(OrderInfo orderInfo) {
@@ -47,10 +42,7 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
         primeAccount.setBalanceUsable(primeAccount.getBalanceUsable()+orderInfo.getOrderAmount()*orderInfo.getOrderPrice());
         return updateById(primeAccount);
     }
-    @Override
-    public boolean increaseShareUsableByOrder(OrderInfo orderInfo){
-        return false;
-    }
+
     @Override
     public boolean changeBalanceTotalByDeal(Transaction transaction, OrderInfo orderInfo , Stock stock){
         PrimeAccount primeAccount = getById(orderInfo.getPrimeAccountId());
@@ -61,10 +53,6 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
             primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()+transaction.getPrice()*transaction.getAmount());
         }
         return updateById(primeAccount);
-    }
-    @Override
-    public boolean changeShareTotalByDeal(Transaction transaction, OrderInfo orderInfo, Stock stock){
-        return false;
     }
 
 

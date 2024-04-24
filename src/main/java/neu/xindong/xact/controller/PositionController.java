@@ -3,16 +3,18 @@ package neu.xindong.xact.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
+import neu.xindong.xact.dto.request.OrderRequest;
 import neu.xindong.xact.dto.response.PositionResp;
+import neu.xindong.xact.dto.response.TransactionResp;
 import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.Position;
+import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.service.OrderInfoService;
 import neu.xindong.xact.service.PositionService;
+import neu.xindong.xact.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ public class PositionController {
     private PositionService positionService;
     @Autowired
     private OrderInfoService orderInfoService;
+    @Autowired
+    private StockService stockService;
 
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户获取持仓",
@@ -93,6 +97,48 @@ public class PositionController {
             }
             return HttpResponse.success();
         } catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failure(0, "数据库访问错误");
+        }
+
+    }
+    @GetMapping("/orderPosition")
+    @Operation(summary = "做委托添加持仓",
+            description = "做委托添加持仓信息")
+    public HttpResponse<Object> orderPosition(@RequestBody TransactionResp transactionResp) {
+        try {
+            OrderInfo orderInfo=orderInfoService.getById(transactionResp.getTransaction().getOrderId());
+            Stock stock=stockService.findStockById(orderInfo.getStockId());
+            Position position= Position.builder()
+                    .primeAmountId(orderInfo.getPrimeAccountId())
+                    .followAccountId(orderInfo.getFollowAccountId())
+                    .stockId(orderInfo.getStockId())
+                    .market(stock.getMarket())
+                    .build();
+            positionService.makePosition(position);
+            return HttpResponse.success();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failure(0, "数据库访问错误");
+        }
+    }
+
+    @GetMapping("/dealPosition")
+    @Operation(summary = "做成交添加持仓",
+            description = "做成交添加持仓信息")
+    public HttpResponse<Object> dealPosition(@RequestBody TransactionResp transactionResp) {
+        try {
+//            OrderInfo orderInfo=orderInfoService.getById(transactionResp.getTransaction().getOrderId());
+//            Stock stock=stockService.findStockById(orderInfo.getStockId());
+//            Position position= Position.builder()
+//                    .primeAmountId(orderInfo.getPrimeAccountId())
+//                    .followAccountId(orderInfo.getFollowAccountId())
+//                    .stockId(orderInfo.getStockId())
+//                    .market(stock.getMarket())
+//                    .build();
+//            positionService.makePosition(position);
+            return HttpResponse.success();
+        }catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failure(0, "数据库访问错误");
         }
