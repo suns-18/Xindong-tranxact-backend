@@ -10,7 +10,6 @@ import neu.xindong.xact.entity.Position;
 import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.*;
-import neu.xindong.xact.util.RegisterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,16 +37,15 @@ public class TransactionController {
         try {
             List<Transaction> transactions = transactionService.findTranscationByPrimeAccountId(primeAccountId);
             List<TransactionResp>transactionResps=new ArrayList<>();
-//            for(Transaction transaction:transactions){
-//                TransactionResp transactionResp=TransactionResp.builder()
-//                        .transaction(transaction)
-//                        .transactionBalance(transaction.getAmount()*transaction.getPrice())
-//                        .build();
-//                transactionResps.add(transactionResp);
-//            }
             transactions.forEach(transaction -> {
-                var transactionResp=TransactionResp.builder()
+                OrderInfo orderInfo=orderInfoService.getById(transaction.getOrderId());
+                var transactionResp=TransactionResp
+                        .builder()
                         .transaction(transaction)
+                        .primeAccountId(primeAccountId)
+                        .followAccountId(orderInfo.getFollowAccountId())
+                        .trdId(orderInfo.getTrdId())
+                        .tradeUnit(orderInfo.getUnit())
                         .transactionBalance(transaction.getAmount()*transaction.getPrice())
                         .build();
                 transactionResps.add(transactionResp);
