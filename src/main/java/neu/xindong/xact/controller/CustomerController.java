@@ -6,7 +6,6 @@ import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.AccountRegisterRequest;
 import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.entity.FollowAccount;
-import neu.xindong.xact.entity.PrimeAccount;
 import neu.xindong.xact.service.BankService;
 import neu.xindong.xact.service.CustomerService;
 import neu.xindong.xact.service.FollowAccountService;
@@ -110,6 +109,9 @@ public class CustomerController {
                             .balanceUsable(0.0)
                             .build())
                     .collect(Collectors.toList());
+            //确保一致
+            request.getBank().setCustomerId(request.getCustomer().getId());
+            request.getPrimeAccount().setId(request.getCustomer().getId());
             customerService.save(request.getCustomer());
             bankService.save(request.getBank());
             primeAccountService.save(request.getPrimeAccount());
