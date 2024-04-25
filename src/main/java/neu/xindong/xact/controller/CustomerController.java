@@ -7,6 +7,7 @@ import neu.xindong.xact.dto.request.AccountRegisterRequest;
 import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.entity.FollowAccount;
 import neu.xindong.xact.entity.PrimeAccount;
+import neu.xindong.xact.service.BankService;
 import neu.xindong.xact.service.CustomerService;
 import neu.xindong.xact.service.FollowAccountService;
 import neu.xindong.xact.service.PrimeAccountService;
@@ -26,6 +27,8 @@ import static neu.xindong.xact.util.RegisterUtil.createFollowAccount;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private BankService bankService;
     @Autowired
     private FollowAccountService followAccountService;
     @Autowired
@@ -65,60 +68,51 @@ public class CustomerController {
             return HttpResponse.failureWhenAccessDB();
         }
     }
+
     @GetMapping("/generateCustomerId")
     @Operation(summary = "生成客户代码",
             description = "返回客户代码")
-    public HttpResponse<Integer> generateCustomerId(){
+    public HttpResponse<Integer> generateCustomerId() {
         try {
             var lastCustomer = customerService.findLastCustomerOrderById();
-            if(lastCustomer==null) {
+            if (lastCustomer == null) {
                 //10000001 ->lastCustomer;
                 return HttpResponse.success(44444444);
-            }
-            else{
-                return HttpResponse.success(lastCustomer.getId()+1);
+            } else {
+                return HttpResponse.success(lastCustomer.getId() + 1);
             }
         } catch (Exception e) {
             return HttpResponse.failureWhenAccessDB();
         }
     }
+
     @PostMapping("/save")
     @Operation(summary = "保存客户",
             description = "输入客户的信息，提交到服务器，返回提交操作的结果")
 
     public HttpResponse<Object> saveCustomer(
-            @RequestBody AccountRegisterRequest accountRegisterRequest) {
+            @RequestBody AccountRegisterRequest request) {
         try {
-
-            // 使用AccountRegisterReq对象的数据创建Customer对象
-            Customer customer = Customer.builder()
-                    .id(accountRegisterRequest.getCustomer().getId())
-                    .customerName(accountRegisterRequest.getCustomer().getCustomerName())
-                    .idType(accountRegisterRequest.getCustomer().getIdType())
-                    .idNumber(accountRegisterRequest.getCustomer().getIdNumber())
-                    .cuacctCls(accountRegisterRequest.getCustomer().getCuacctCls())
-                    .cuacctStatus(accountRegisterRequest.getCustomer().getCuacctStatus())
-                    .build();
-            PrimeAccount primeAccount = PrimeAccount.builder()
-                    .id(customer.getId())
-                    .balanceTotal(100000.0)//现在只是统一存入100000元
-                    .build();
             // 使用流式编程创建 FollowAccount 列表
-            List<FollowAccount> followAccounts = accountRegisterRequest.getMarket().stream()
+            List<FollowAccount> followAccounts = request.getMarket().stream()
                     .map(market -> FollowAccount.builder()
-                            .primeAccountId(customer.getId()) // 假设这里需要客户ID作为主账户ID
+                            .primeAccountId(request.getPrimeAccount().getId()) // 假设这里需要客户ID作为主账户ID
                             .market(market)
-                            .updateTime(new Date()) // 设置当前时间为更新时间
+                            .updateTime(new Date())
+                            // 设置当前时间为更新时间
                             // 假设id是自动生成的
-                            .id(createFollowAccount(market,customer.getCuacctCls()))
+                            .id(createFollowAccount(
+                                    market, request.getCustomer().getCuacctCls()
+                            ))
                             // balanceTotal和balanceUsable在这里是useless，根据实际情况设置
                             .balanceTotal(0.0)
                             .balanceUsable(0.0)
                             .build())
                     .collect(Collectors.toList());
+            customerService.save(request.getCustomer());
+            bankService.save(request.getBank());
+            primeAccountService.save(request.getPrimeAccount());
             followAccountService.saveBatch(followAccounts);
-            customerService.save(customer);
-            primeAccountService.save(primeAccount);
             return HttpResponse.success();
         } catch (Exception e) {
             e.printStackTrace();
