@@ -14,4 +14,5 @@ public interface PrimeAccountService extends IService<PrimeAccount> {
 
     boolean changeBalanceTotalByDeal(Transaction transaction, OrderInfo orderInfo, Stock stock);
 
+    PrimeAccount findLastPrimeAccountOrderById();
 }

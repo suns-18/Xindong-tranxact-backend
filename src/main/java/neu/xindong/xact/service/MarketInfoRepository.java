@@ -19,7 +19,8 @@ public interface MarketInfoRepository extends CrudRepository<MarketInfo, String>
 
     boolean existsByStockCode(String s);
 
-    Page<MarketInfo> findMarketInfosByMarketTime(Date marketTime, Pageable page);
+    Page<MarketInfo> findMarketInfosByMarketTime(Date marketTime,
+                                                 Pageable page);
 
     Page<MarketInfo> findAll(Pageable page);
 
