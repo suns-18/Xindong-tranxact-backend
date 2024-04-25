@@ -3,7 +3,6 @@ package neu.xindong.xact.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import neu.xindong.xact.dao.OrderInfoDao;
 import neu.xindong.xact.entity.OrderInfo;
-import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.OrderInfoService;
 import neu.xindong.xact.util.RegisterUtil;
@@ -21,7 +20,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
 
     @Override
     public boolean doOrder(OrderInfo orderInfo) {
-        orderInfo.setId(RegisterUtil.CreateOrderId());
+        orderInfo.setId(RegisterUtil.createOrderId());
         orderInfo.setOrderTime(new Date());
         orderInfo.setDealAmount(0);
         orderInfo.setDealPrice(0.0);
