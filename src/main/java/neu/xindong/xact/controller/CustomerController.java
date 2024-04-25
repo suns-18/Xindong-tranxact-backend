@@ -10,6 +10,7 @@ import neu.xindong.xact.service.BankService;
 import neu.xindong.xact.service.CustomerService;
 import neu.xindong.xact.service.FollowAccountService;
 import neu.xindong.xact.service.PrimeAccountService;
+import neu.xindong.xact.util.RegisterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-import static neu.xindong.xact.util.RegisterUtil.createFollowAccount;
+import static neu.xindong.xact.util.RegisterUtil.createFollowAccountId;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -93,6 +94,7 @@ public class CustomerController {
     public HttpResponse<Object> saveCustomer(
             @RequestBody AccountRegisterRequest request) {
         try {
+            System.out.println(request.getMarket());
             // 使用流式编程创建 FollowAccount 列表
             List<FollowAccount> followAccounts = request.getMarket().stream()
                     .map(market -> FollowAccount.builder()
@@ -101,7 +103,7 @@ public class CustomerController {
                             .updateTime(new Date())
                             // 设置当前时间为更新时间
                             // 假设id是自动生成的
-                            .id(createFollowAccount(
+                            .id(RegisterUtil.createFollowAccountId(
                                     market, request.getCustomer().getCuacctCls()
                             ))
                             // balanceTotal和balanceUsable在这里是useless，根据实际情况设置

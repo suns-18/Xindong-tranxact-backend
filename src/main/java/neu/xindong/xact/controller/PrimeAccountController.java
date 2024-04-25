@@ -28,4 +28,22 @@ public class PrimeAccountController {
         }
 
     }
+
+    @GetMapping("/generateId")
+    @Operation(summary = "生成主账户ID", description = "返回生成的主账户ID")
+    public HttpResponse<Integer>
+    generatePrimeAccountByCustomerId() {
+        try {
+            var lastAccount = primeAccountService.findLastPrimeAccountOrderById();
+            if (lastAccount == null) {
+                //10000001 ->lastCustomer;
+                return HttpResponse.success(44444444);
+            } else {
+                return HttpResponse.success(lastAccount.getId() + 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failureWhenAccessDB();
+        }
+    }
 }
