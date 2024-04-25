@@ -82,6 +82,7 @@ public class CustomerController {
                 return HttpResponse.success(lastCustomer.getId() + 1);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
         }
     }

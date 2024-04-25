@@ -28,7 +28,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerDao, Customer>
 
     @Override
     public Customer findLastCustomerOrderById() {
-        return query().orderByDesc("id").one();
+        return query().orderByDesc("id").last("limit 1").one();
     }
 
 }
