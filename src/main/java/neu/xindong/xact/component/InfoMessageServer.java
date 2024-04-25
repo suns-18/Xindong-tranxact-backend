@@ -41,7 +41,7 @@ public class InfoMessageServer {
             currentMsg = InfoMessage.builder()
                     .code(0)
                     .message("证券市场又度过了平静的一瞬，" +
-                            "欢迎您使用信东XAct金融交易系统！" +
+                            "欢迎您使用信东XAct证券业务综合服务平台！" +
                             "爱东，信东，等东！")
                     .breaking(false)
                     .build();
