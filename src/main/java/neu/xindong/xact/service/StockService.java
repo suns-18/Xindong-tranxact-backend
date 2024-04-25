@@ -8,4 +8,6 @@ import java.util.List;
 public interface StockService extends IService<Stock> {
 
     List<Stock>findAll();
+
+    List<Stock>findStockLikeId(String id);
 }

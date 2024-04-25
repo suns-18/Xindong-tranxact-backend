@@ -14,4 +14,9 @@ public class StockServiceImpl extends ServiceImpl<StockDao, Stock>
     public List<Stock> findAll() {
         return query().list();
     }
+
+    @Override
+    public List<Stock> findStockLikeId(String id) {
+        return query().like("id", id).list();
+    }
 }
