@@ -12,5 +12,5 @@ import java.util.List;
 @Data
 public class AccountRegisterRequest {
     private Customer customer;
-    private List<FollowAccount> followAccountList;
+    private List<Integer> market;
 }
