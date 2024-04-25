@@ -11,4 +11,6 @@ public interface CustomerService extends IService<Customer> {
 
     List<Customer> findCustomerLikeId(Integer id);
 
+    Customer findLastCustomerOrderById();
+
 }

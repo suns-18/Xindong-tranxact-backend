@@ -25,4 +25,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerDao, Customer>
     public List<Customer> findCustomerLikeId(Integer id) {
         return query().like("id", id).list();
     }
+
+    @Override
+    public Customer findLastCustomerOrderById() {
+        return query().orderByDesc("id").one();
+    }
+
 }
