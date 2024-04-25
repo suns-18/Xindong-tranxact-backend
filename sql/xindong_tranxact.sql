@@ -257,14 +257,9 @@ DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction`  (
   `id` int NOT NULL,
   `order_id` int NULL DEFAULT NULL,
-  `unit` int NULL DEFAULT NULL,
-  `prime_account_id` int NULL DEFAULT NULL,
-  `follow_account_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `trd_id` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `amount` int NULL DEFAULT NULL,
   `price` decimal(20, 4) NULL DEFAULT NULL,
   `transact_time` timestamp NULL DEFAULT NULL,
-  `stock_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
