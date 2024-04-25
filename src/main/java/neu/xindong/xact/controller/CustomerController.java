@@ -105,8 +105,6 @@ public class CustomerController {
                                     market, request.getCustomer().getCuacctCls()
                             ))
                             // balanceTotal和balanceUsable在这里是useless，根据实际情况设置
-                            .balanceTotal(0.0)
-                            .balanceUsable(0.0)
                             .build())
                     .collect(Collectors.toList());
             //确保一致
