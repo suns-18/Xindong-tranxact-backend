@@ -20,6 +20,5 @@ public class PrimeAccount {
     private Double balanceUsable;
     private Integer cuacctCls;
     private Date updateTime;
-    private Integer password;
-
+    private String password;
 }
