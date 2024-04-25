@@ -11,7 +11,7 @@
  Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 25/04/2024 18:50:01
+ Date: 25/04/2024 19:10:03
 */
 
 SET NAMES utf8mb4;
@@ -207,13 +207,13 @@ INSERT INTO `position` VALUES (12, 33333333, 'B333333333', '000651', 1, '2024-04
 DROP TABLE IF EXISTS `prime_account`;
 CREATE TABLE `prime_account`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `balance_usable` decimal(20, 4) NULL DEFAULT NULL,
-  `balance_total` decimal(20, 4) NULL DEFAULT NULL,
+  `balance_usable` decimal(20, 4) NULL DEFAULT 100000.0000,
+  `balance_total` decimal(20, 4) NULL DEFAULT 100000.0000,
   `cuacct_cls` int NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL,
   `password` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 51395745 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 51395746 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of prime_account
@@ -231,6 +231,7 @@ INSERT INTO `prime_account` VALUES (34777773, 2222220.0000, NULL, 3, '2024-04-25
 INSERT INTO `prime_account` VALUES (37767673, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
 INSERT INTO `prime_account` VALUES (37777773, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
 INSERT INTO `prime_account` VALUES (51395744, NULL, 100000.0000, NULL, NULL, NULL);
+INSERT INTO `prime_account` VALUES (51395745, 100000.0000, 100000.0000, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for stock
