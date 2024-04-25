@@ -103,7 +103,11 @@ public class OrderInfoController {
             description = "撤销委托")
     public HttpResponse<Object> withdrawOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
         try {
-            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
+//            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
+            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getOrderInfo().getId());
+            System.out.println(orderRequest.getCustomerId()+"aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            System.out.println("---------------------------------------------------");
+            System.out.println(orderInfo.toString());
             Position position=positionService.findPositionByStockId(orderInfo.getStockId(),orderInfo.getPrimeAccountId());
             orderInfoService.withdrawOrder(orderInfo);
             primeAccountService.increaseBalanceUsableByOrder(orderInfo);
