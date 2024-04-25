@@ -16,7 +16,7 @@ import java.util.Date;
 public class Position {
     @TableId
     private Integer id;
-    private Integer primeAmountId;
+    private Integer primeAccountId;
     private String followAccountId;
     private String stockId;
     private Integer market;

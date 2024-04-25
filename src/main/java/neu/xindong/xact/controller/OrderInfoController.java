@@ -68,7 +68,7 @@ public class OrderInfoController {
         }
     }
 
-    @GetMapping("/doOrder")
+    @PostMapping("/doOrder")
     @Operation(summary = "做委托",
             description = "作委托")
     public HttpResponse<Object> doOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
@@ -98,7 +98,7 @@ public class OrderInfoController {
         }
     }
 
-    @GetMapping("/withdrawOrder")
+    @PostMapping("/withdrawOrder")
     @Operation(summary = "撤销委托",
             description = "撤销委托")
     public HttpResponse<Object> withdrawOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {

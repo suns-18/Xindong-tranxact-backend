@@ -11,10 +11,7 @@ import neu.xindong.xact.service.FollowAccountService;
 import neu.xindong.xact.service.PrimeAccountService;
 import neu.xindong.xact.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class FollowAccountController {
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户id获取从账户",
             description = "返回从账户列表")
-    public HttpResponse<List<FollowAccount>> getFollowAccountByPrimeAccountId(Integer primeAccountId) {
+    public HttpResponse<List<FollowAccount>> getFollowAccountByPrimeAccountId(@RequestParam Integer primeAccountId) {
         try {
             List<FollowAccount> followAccounts = followAccountService.findFollowAccountByPrimeAccountId(primeAccountId);
             return HttpResponse.success(followAccounts);
@@ -41,7 +38,7 @@ public class FollowAccountController {
             return HttpResponse.failureWhenAccessDB();
         }
     }
-    @GetMapping("/getAccountsByCustomerAndStock")
+    @PostMapping("/getAccountsByCustomerAndStock")
     @Operation(summary = "根据客户ID和股票代码获取主账户资产和对应附账户",
             description = "返回账户")
     public HttpResponse<AccountsResp> getAccountsByCustomerAndStock(@RequestBody OrderRequest orderRequest){

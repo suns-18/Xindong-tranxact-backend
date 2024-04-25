@@ -50,9 +50,9 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
         PrimeAccount primeAccount = getById(orderInfo.getPrimeAccountId());
         if (orderInfo.getTrdId()=='B'){//部分成交买：余额=余额-成交金额，可用不变
             primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()-transaction.getPrice()*transaction.getAmount());
-        }else {//部分成交卖，余额=余额+成交金额，可用=可用+成交金额-印花税
+        }else {//部分成交卖，余额=余额+成交金额-印花税，可用=可用+成交金额-印花税
             primeAccount.setBalanceUsable(primeAccount.getBalanceUsable()+transaction.getPrice()*transaction.getAmount()*(1-stock.getStamp()));
-            primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()+transaction.getPrice()*transaction.getAmount());
+            primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()+transaction.getPrice()*transaction.getAmount()*(1-stock.getStamp()));
         }
         return updateById(primeAccount);
     }

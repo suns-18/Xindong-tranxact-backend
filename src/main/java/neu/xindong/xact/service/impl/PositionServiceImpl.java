@@ -30,7 +30,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     //委托买  不实现
     //委托卖 冻结股票 可用=余额-委托数量 余额不变
     public boolean reduceShareByOrder(Position position,OrderInfo orderInfo) {
-        position.setShareTotal(position.getShareTotal()-orderInfo.getOrderAmount());
+        position.setShareUsable(position.getShareTotal()-orderInfo.getOrderAmount());
         position.setUpdateTime(new Date());
         return updateById(position);
     }
@@ -39,7 +39,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     //撤单买 不实现
     //撤单卖 可用=余额 余额不变
     public boolean increaseShareByOrder(Position position) {
-        position.setShareTotal(position.getShareTotal());
+        position.setShareUsable(position.getShareTotal());
         position.setUpdateTime(new Date());
         return updateById(position);
     }
@@ -49,9 +49,10 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     public boolean increaseShareByDeal(Position position, Stock stock, OrderInfo orderInfo, Transaction transaction) {
         if(position.getId()==null){//之前没买过
             position.setId(RegisterUtil.createOrderId());
-            position.setPrimeAmountId(orderInfo.getPrimeAccountId());
+            position.setPrimeAccountId(orderInfo.getPrimeAccountId());
             position.setFollowAccountId(orderInfo.getFollowAccountId());
             position.setMarket(stock.getMarket());
+            position.setStockId(stock.getId());
             position.setShareTotal(transaction.getAmount());
             position.setShareUsable(transaction.getAmount());
         }else{//之前买过
@@ -65,7 +66,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     @Override
     //成交卖 余额=余额-成交 可用不变
     public boolean reduceShareByDeal(Position position, Transaction transaction) {
-        position.setShareTotal(position.getShareTotal()+transaction.getAmount());
+        position.setShareTotal(position.getShareTotal()-transaction.getAmount());
         position.setUpdateTime(new Date());
         return updateById(position);
     }

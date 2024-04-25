@@ -46,7 +46,7 @@ public class CustomerController {
 
     @GetMapping("/getById")
     @Operation(summary = "根据id获取用户", description = "返回指定id的用户")
-    public HttpResponse<Customer> getCustomerById(Integer id) {
+    public HttpResponse<Customer> getCustomerById(@RequestParam Integer id) {
         try {
             Customer customer = customerService.findCustomerById(id);
             return HttpResponse.success(customer);
@@ -58,7 +58,7 @@ public class CustomerController {
 
     @GetMapping("/getLikeId")
     @Operation(summary = "根据id模糊查询用户", description = "返回满足模糊匹配原则的id对应用户")
-    public HttpResponse<List<Customer>> getCustomerLikeId(Integer id) {
+    public HttpResponse<List<Customer>> getCustomerLikeId(@RequestParam Integer id) {
         try {
             return HttpResponse.success(customerService.findCustomerLikeId(id));
         } catch (Exception e) {

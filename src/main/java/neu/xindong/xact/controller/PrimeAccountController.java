@@ -8,6 +8,7 @@ import neu.xindong.xact.service.PrimeAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,7 +19,7 @@ public class PrimeAccountController {
     private PrimeAccountService primeAccountService;
     @GetMapping("/getByCustomerId")
     @Operation(summary = "根据客户代码获取主账户", description = "返回主账户")
-    public HttpResponse<PrimeAccount> getPrimeAccountByCustomerId(Integer customerId) {
+    public HttpResponse<PrimeAccount> getPrimeAccountByCustomerId(@RequestParam Integer customerId) {
         try {
             PrimeAccount primeAccount = primeAccountService.findPrimeAccountByCustomerId(customerId);
             return HttpResponse.success(primeAccount);
