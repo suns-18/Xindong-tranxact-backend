@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MarketInfoRepoTest {
     Random random = new Random();
 
