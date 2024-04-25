@@ -76,7 +76,7 @@ public class OrderInfoController {
             Stock stock = stockService.getById(orderRequest.getOrderInfo().getStockId());
             Customer customer = customerService.findCustomerById(orderRequest.getCustomerId());
             Commission commission = commissionService.findCommissionByCuacctclsAndMarket(customer.getCuacctCls());
-            Position position=positionService.findPositionByStockId(stock.getId());
+            Position position=positionService.findPositionByStockId(stock.getId(),orderRequest.getCustomerId());
             OrderInfo orderInfo = OrderInfo.builder()
                     .unit(orderRequest.getOrderInfo().getUnit())
                     .primeAccountId(orderRequest.getCustomerId())
@@ -104,7 +104,7 @@ public class OrderInfoController {
     public HttpResponse<Object> withdrawOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
         try {
             OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
-            Position position=positionService.findPositionByStockId(orderInfo.getStockId());
+            Position position=positionService.findPositionByStockId(orderInfo.getStockId(),orderInfo.getPrimeAccountId());
             orderInfoService.withdrawOrder(orderInfo);
             primeAccountService.increaseBalanceUsableByOrder(orderInfo);
             if(orderRequest.getOrderInfo().getTrdId()=='S')positionService.increaseShareByOrder(position);

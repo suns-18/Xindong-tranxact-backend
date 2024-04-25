@@ -11,7 +11,7 @@ import java.util.List;
 public interface PositionService extends IService<Position> {
     List<Position> findPositionByPrimeAccountId(Integer primeAccountId);
 
-    Position findPositionByStockId(String stockId);
+    Position findPositionByStockId(String stockId,Integer primeAccountId);
 
 
     //委托买  不实现

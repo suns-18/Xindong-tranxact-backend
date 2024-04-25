@@ -13,7 +13,6 @@ import java.util.List;
 public class OrderInfoServiceTest {
     @Autowired
     private OrderInfoServiceImpl orderInfoService;
-
     @Test
     public void findOrderInfoByPrimeAccountIdTest() {
         List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(31355654);

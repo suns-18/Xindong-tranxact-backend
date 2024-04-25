@@ -21,8 +21,8 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     }
 
     @Override
-    public Position findPositionByStockId(String stockId){
-        return query().eq("stock_id",stockId).list().get(0);
+    public Position findPositionByStockId(String stockId,Integer primeAccountId){
+        return query().eq("stock_id",stockId).eq("prime_account_id",primeAccountId).list().get(0);
     }
 
 

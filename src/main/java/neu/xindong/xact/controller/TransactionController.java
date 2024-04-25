@@ -66,7 +66,7 @@ public class TransactionController {
         try {
             OrderInfo orderInfo=orderInfoService.getById(transactionRequest.getOrderInfo().getId());
             Stock stock=stockService.getById(orderInfo.getStockId());
-            Position position=positionService.findPositionByStockId(stock.getId());
+            Position position=positionService.findPositionByStockId(stock.getId(),orderInfo.getPrimeAccountId());
 
             Transaction transaction = Transaction.builder()
                     .price(transactionRequest.getPrice())
