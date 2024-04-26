@@ -11,7 +11,7 @@
  Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 25/04/2024 19:10:03
+ Date: 26/04/2024 11:37:46
 */
 
 SET NAMES utf8mb4;
@@ -64,12 +64,12 @@ CREATE TABLE `commission`  (
 -- ----------------------------
 INSERT INTO `commission` VALUES (1, 31355654, 0, 0, 'S0', 0.0010);
 INSERT INTO `commission` VALUES (2, 31355654, 0, 1, 'S0', 0.0010);
-INSERT INTO `commission` VALUES (3, NULL, 1, 0, 'S0', 0.0008);
-INSERT INTO `commission` VALUES (4, NULL, 1, 1, 'S0', 0.0008);
-INSERT INTO `commission` VALUES (5, NULL, 2, 0, 'S0', 0.0006);
-INSERT INTO `commission` VALUES (6, NULL, 2, 1, 'S0', 0.0006);
-INSERT INTO `commission` VALUES (7, NULL, 3, 0, 'S0', 0.0003);
-INSERT INTO `commission` VALUES (8, NULL, 3, 1, 'S0', 0.0003);
+INSERT INTO `commission` VALUES (3, 11111111, 1, 0, 'S0', 0.0008);
+INSERT INTO `commission` VALUES (4, 11111111, 1, 1, 'S0', 0.0008);
+INSERT INTO `commission` VALUES (5, 22222222, 2, 0, 'S0', 0.0006);
+INSERT INTO `commission` VALUES (6, 22222222, 2, 1, 'S0', 0.0006);
+INSERT INTO `commission` VALUES (7, 33333333, 3, 0, 'S0', 0.0003);
+INSERT INTO `commission` VALUES (8, 33333333, 3, 1, 'S0', 0.0003);
 
 -- ----------------------------
 -- Table structure for customer
@@ -88,13 +88,13 @@ CREATE TABLE `customer`  (
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
-INSERT INTO `customer` VALUES (11111111, NULL, '01', NULL, NULL, NULL);
-INSERT INTO `customer` VALUES (13579966, 'string', '00', 'string', 0, 0);
-INSERT INTO `customer` VALUES (22222222, NULL, '02', NULL, NULL, NULL);
+INSERT INTO `customer` VALUES (11111111, 'wxr', '01', '130633200203275473', 1, 0);
+INSERT INTO `customer` VALUES (13579966, 'string', '00', '130633200203275473', 1, 0);
+INSERT INTO `customer` VALUES (22222222, 'wxr123', '02', '130633200203275473', 1, 0);
 INSERT INTO `customer` VALUES (31355654, '测试', '00', '130633200203275473', 0, 0);
 INSERT INTO `customer` VALUES (31767673, 'nhoooo', '00', '123456789987654321', 3, 0);
 INSERT INTO `customer` VALUES (33333313, 'niaho', '00', '123456789987654321', 3, 0);
-INSERT INTO `customer` VALUES (33333333, NULL, '00', NULL, NULL, NULL);
+INSERT INTO `customer` VALUES (33333333, 'asdas', '00', '130633200203275473', 3, 0);
 INSERT INTO `customer` VALUES (33333353, 'niaho', '00', '123456789987654321', 3, 0);
 INSERT INTO `customer` VALUES (33333373, 'niaho', '00', '123456789987654321', 3, 0);
 INSERT INTO `customer` VALUES (33333393, 'niaho', '00', '123456789987654321', 3, 0);
@@ -107,7 +107,7 @@ INSERT INTO `customer` VALUES (34777773, 'nhoooo', '00', '123456789987654321', 3
 INSERT INTO `customer` VALUES (37767673, 'nhoooo', '00', '123456789987654321', 3, 0);
 INSERT INTO `customer` VALUES (37767773, 'nhoooo', '00', '123456789987654321', 3, 0);
 INSERT INTO `customer` VALUES (37777773, 'nhoooo', '00', '123456789987654321', 3, 0);
-INSERT INTO `customer` VALUES (51395744, 'string', '00', 'string', 0, 0);
+INSERT INTO `customer` VALUES (51395744, 'string', '00', '130633200203275473', 3, 0);
 
 -- ----------------------------
 -- Table structure for follow_account
@@ -116,28 +116,26 @@ DROP TABLE IF EXISTS `follow_account`;
 CREATE TABLE `follow_account`  (
   `id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `prime_account_id` int NULL DEFAULT NULL,
-  `balance` decimal(20, 4) NULL DEFAULT NULL,
   `market` int NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL,
-  ` balance_usable` decimal(20, 4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of follow_account
 -- ----------------------------
-INSERT INTO `follow_account` VALUES ('0000301051', 44381930, NULL, 0, '2024-04-20 17:39:28', NULL);
-INSERT INTO `follow_account` VALUES ('0000457974', 13579966, NULL, 0, '2024-04-20 17:39:28', NULL);
-INSERT INTO `follow_account` VALUES ('0000483059', 51395744, NULL, 0, '2024-04-20 17:39:28', NULL);
-INSERT INTO `follow_account` VALUES ('0000608178', 32492884, NULL, 0, '2024-04-25 17:13:17', NULL);
-INSERT INTO `follow_account` VALUES ('0111111111', 11111111, 100000.0000, 0, '2024-04-18 18:42:10', NULL);
-INSERT INTO `follow_account` VALUES ('0123456789', 31355654, 50000.0000, 0, '2024-04-18 18:39:26', NULL);
-INSERT INTO `follow_account` VALUES ('0222222222', 22222222, 500000.0000, 0, '2024-04-18 18:42:34', NULL);
-INSERT INTO `follow_account` VALUES ('0333333333', 33333333, 1000000.0000, 0, '2024-04-19 15:33:42', NULL);
-INSERT INTO `follow_account` VALUES ('A111111111', 11111111, NULL, 1, '2024-04-19 15:50:42', NULL);
-INSERT INTO `follow_account` VALUES ('A123456789', 31355654, NULL, 1, NULL, NULL);
-INSERT INTO `follow_account` VALUES ('A222222222', 22222222, NULL, 1, NULL, NULL);
-INSERT INTO `follow_account` VALUES ('B333333333', 33333333, NULL, 1, NULL, NULL);
+INSERT INTO `follow_account` VALUES ('0000301051', 44381930, 0, '2024-04-20 17:39:28');
+INSERT INTO `follow_account` VALUES ('0000457974', 13579966, 0, '2024-04-20 17:39:28');
+INSERT INTO `follow_account` VALUES ('0000483059', 51395744, 0, '2024-04-20 17:39:28');
+INSERT INTO `follow_account` VALUES ('0000608178', 32492884, 0, '2024-04-25 17:13:17');
+INSERT INTO `follow_account` VALUES ('0111111111', 11111111, 0, '2024-04-18 18:42:10');
+INSERT INTO `follow_account` VALUES ('0123456789', 31355654, 0, '2024-04-18 18:39:26');
+INSERT INTO `follow_account` VALUES ('0222222222', 22222222, 0, '2024-04-18 18:42:34');
+INSERT INTO `follow_account` VALUES ('0333333333', 33333333, 0, '2024-04-19 15:33:42');
+INSERT INTO `follow_account` VALUES ('A111111111', 11111111, 1, '2024-04-19 15:50:42');
+INSERT INTO `follow_account` VALUES ('A123456789', 31355654, 1, '2024-04-26 11:35:07');
+INSERT INTO `follow_account` VALUES ('A222222222', 22222222, 1, '2024-04-26 11:35:09');
+INSERT INTO `follow_account` VALUES ('B333333333', 33333333, 1, '2024-04-26 11:35:12');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -218,20 +216,20 @@ CREATE TABLE `prime_account`  (
 -- ----------------------------
 -- Records of prime_account
 -- ----------------------------
-INSERT INTO `prime_account` VALUES (11111111, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `prime_account` VALUES (13579966, NULL, 100000.0000, NULL, NULL, NULL);
-INSERT INTO `prime_account` VALUES (22222222, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `prime_account` VALUES (31355654, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `prime_account` VALUES (31767673, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (33333333, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `prime_account` VALUES (33337773, 2222220.0000, 10000.0000, 0, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (33737773, 2222220.0000, 10000.0000, 3, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (34737773, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (34777773, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (37767673, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (37777773, 2222220.0000, NULL, 3, '2024-04-25 16:53:13', 123456);
-INSERT INTO `prime_account` VALUES (51395744, NULL, 100000.0000, NULL, NULL, NULL);
-INSERT INTO `prime_account` VALUES (51395745, 100000.0000, 100000.0000, NULL, NULL, NULL);
+INSERT INTO `prime_account` VALUES (11111111, 10000000.0000, 10000000.0000, 1, '2024-04-26 11:29:09', 123456);
+INSERT INTO `prime_account` VALUES (13579966, 10000000.0000, 10000000.0000, 1, '2024-04-26 11:29:11', 123456);
+INSERT INTO `prime_account` VALUES (22222222, 10000000.0000, 10000000.0000, 2, '2024-04-26 11:29:12', 123456);
+INSERT INTO `prime_account` VALUES (31355654, 10000000.0000, 10000000.0000, 3, '2024-04-26 11:29:13', 123456);
+INSERT INTO `prime_account` VALUES (31767673, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (33333333, 10000000.0000, 10000000.0000, 3, '2024-04-26 11:28:18', 123456);
+INSERT INTO `prime_account` VALUES (33337773, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (33737773, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (34737773, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (34777773, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (37767673, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (37777773, 2222220.0000, 2222220.0000, 3, '2024-04-25 16:53:13', 123456);
+INSERT INTO `prime_account` VALUES (51395744, 100000.0000, 100000.0000, 3, '2024-04-26 11:29:24', 123456);
+INSERT INTO `prime_account` VALUES (51395745, 100000.0000, 100000.0000, 3, '2024-04-26 11:29:25', 123456);
 
 -- ----------------------------
 -- Table structure for stock
@@ -307,11 +305,12 @@ CREATE TABLE `transaction`  (
   `transact_time` timestamp NULL DEFAULT NULL,
   `stock_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
+INSERT INTO `transaction` VALUES (1, 333333, 22222, 33333333, '0333333333', 'B', 100, 1.5600, '2024-04-26 11:37:01', 1);
 
 -- ----------------------------
 -- View structure for customer_bank
