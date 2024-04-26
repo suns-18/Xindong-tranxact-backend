@@ -17,9 +17,7 @@ public class Transaction {
     @TableId
     private Integer id;
     private Integer orderId;
-    private Integer unit;
     private Integer amount;
     private Double price;
     private Date transactTime;
-    private String stockId;
 }
