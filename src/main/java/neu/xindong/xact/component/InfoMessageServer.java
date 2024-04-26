@@ -46,7 +46,6 @@ public class InfoMessageServer {
                     .breaking(false)
                     .build();
         }
-        System.out.println(currentMsg.hashCode());
         sendMessage(session, currentMsg);
     }
 
