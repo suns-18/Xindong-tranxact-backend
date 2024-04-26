@@ -97,7 +97,6 @@ public class CustomerController {
             @RequestBody AccountRegisterRequest request) {
         try {
             Date time = new Date();
-            System.out.println(request.getMarket());
             // 使用流式编程创建 FollowAccount 列表
             List<FollowAccount> followAccounts = request.getMarket().stream()
                     .map(market -> FollowAccount.builder()
