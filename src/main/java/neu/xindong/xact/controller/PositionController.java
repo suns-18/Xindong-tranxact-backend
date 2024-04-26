@@ -3,15 +3,11 @@ package neu.xindong.xact.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
-import neu.xindong.xact.dto.response.PositionResp;
-import neu.xindong.xact.entity.OrderInfo;
 import neu.xindong.xact.entity.Position;
-import neu.xindong.xact.service.OrderInfoService;
 import neu.xindong.xact.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,29 +16,16 @@ import java.util.List;
 public class PositionController {
     @Autowired
     private PositionService positionService;
-    @Autowired
-    private OrderInfoService orderInfoService;
+
 
 
     @GetMapping("/getByPrimeAccountId")
     @Operation(summary = "根据主账户获取持仓",
             description = "返回持仓")
-    public HttpResponse<List<PositionResp>> getPositionByPrimeAccountId(@RequestParam Integer primeAccountId) {
+    public HttpResponse<List<Position>> getPositionByPrimeAccountId(@RequestParam Integer primeAccountId) {
         try {
-            List<PositionResp> positionResps = new ArrayList<>();
             List<Position> positions = positionService.findPositionByPrimeAccountId(primeAccountId);
-            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
-            positions.forEach(position -> {
-                orderInfos.forEach(orderInfo -> {
-                    PositionResp positionResp=PositionResp.builder()
-                            .position(position)
-                            .frozenShareAmount(orderInfo.getOrderAmount())
-                            .unfrozenShareAmount(orderInfo.getDealAmount())
-                            .build();
-                    positionResps.add(positionResp);
-                });
-            });
-            return HttpResponse.success(positionResps);
+            return HttpResponse.success(positions);
         } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failure(0, "数据库访问错误");

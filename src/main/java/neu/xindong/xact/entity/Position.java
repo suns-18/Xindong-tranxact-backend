@@ -23,4 +23,5 @@ public class Position {
     private Date updateTime;
     private Integer shareTotal;
     private Integer shareUsable;
+    private Integer frozenShareAmount;
 }

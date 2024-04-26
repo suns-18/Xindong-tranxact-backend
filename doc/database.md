@@ -142,7 +142,7 @@ MySQL在Windows平台大小写不敏感
 
 ### 9. position
 
-持仓信息（股份可用=股份余额-冻结数量+解冻数量）（股份冻结数量=委托表的委托数量）（股份解冻数量=委托表的委托数量-委托表的成交数量）
+持仓信息（股份可用=股份余额-冻结数量+解冻数量）（股份冻结数量=委托表的委托数量）
 
 
 
@@ -156,7 +156,6 @@ MySQL在Windows平台大小写不敏感
 | update_time           | timestamp   | NOT NULL    | 更新时间               |
 | share_total           | int         |             | 股份余额               |
 | share_usable          | int         |             | 股份可用               |
-| unfrozen_share_amount | int         |             | 股份解冻数量             |
 | frozen_share_amount   | int         |             | 股份冻结数量             |
 
 ### 10. transaction

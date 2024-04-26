@@ -31,6 +31,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     //委托卖 冻结股票 可用=余额-委托数量 余额不变
     public boolean reduceShareByOrder(Position position,OrderInfo orderInfo) {
         position.setShareUsable(position.getShareTotal()-orderInfo.getOrderAmount());
+        position.setFrozenShareAmount(orderInfo.getOrderAmount());
         position.setUpdateTime(new Date());
         return updateById(position);
     }
@@ -40,6 +41,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     //撤单卖 可用=余额 余额不变
     public boolean increaseShareByOrder(Position position) {
         position.setShareUsable(position.getShareTotal());
+        position.setFrozenShareAmount(0);
         position.setUpdateTime(new Date());
         return updateById(position);
     }
@@ -59,6 +61,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
             position.setShareTotal(position.getShareTotal()+transaction.getAmount());
             position.setShareUsable(position.getShareUsable()+transaction.getAmount());
         }
+        position.setFrozenShareAmount(0);
         position.setUpdateTime(new Date());
         return saveOrUpdate(position);
     }
@@ -68,6 +71,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     public boolean reduceShareByDeal(Position position, Transaction transaction) {
         position.setShareTotal(position.getShareTotal()-transaction.getAmount());
         position.setUpdateTime(new Date());
+        position.setFrozenShareAmount(0);
         return updateById(position);
     }
 }
