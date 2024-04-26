@@ -26,28 +26,28 @@ public class MarketInfoRepoTest {
         }
     }
 
-    @Test
-    void writeAndRead() {
-        var DATA_COUNT = 100;
-        //var DATA_PER_THREAD = 10;
-
-        List<MarketInfo> list = new Vector<>();
-        for (int i = 0; i < DATA_COUNT; i++) {
-            list.add(generateTestData());
-        }
-        list.add(MarketInfo.builder().stockId("114514").build());
-
-        repo.saveAll(list);
-
-        var paged = repo.findAll(Pageable.unpaged());
-        paged.forEach(System.out::println);
-    }
+//    @Test
+//    void writeAndRead() {
+//        var DATA_COUNT = 100;
+//        //var DATA_PER_THREAD = 10;
+//
+//        List<MarketInfo> list = new Vector<>();
+//        for (int i = 0; i < DATA_COUNT; i++) {
+//            list.add(generateTestData());
+//        }
+//        list.add(MarketInfo.builder().stockId("114514").build());
+//
+//        repo.saveAll(list);
+//
+//        var paged = repo.findAll(Pageable.unpaged());
+//        paged.forEach(System.out::println);
+//    }
 
     @Test
     void delete() {
-        repo.deleteByStockCode("114514");
-
-        System.out.println(repo.count());
+//        repo.deleteByStockCode("114514");
+//
+//        System.out.println(repo.count());
 
         repo.deleteAll();
 
@@ -70,28 +70,28 @@ public class MarketInfoRepoTest {
         repo.saveAll(marketInfoList);
     }
 
-    MarketInfo generateTestData() {
-        return MarketInfo.builder()
-                .currentPrice(randomDouble())
-                .yesterdayCollectionPrice(randomDouble())
-                .stockId(randomString(6))
-                .limitUpPrice(randomDouble())
-                .limitDownPrice(randomDouble())
-                .marketTime(new Date(System.currentTimeMillis()))
-                .build();
-    }
+//    MarketInfo generateTestData() {
+//        return MarketInfo.builder()
+//                .currentPrice(randomDouble())
+//                .yesterdayCollectionPrice(randomDouble())
+//                .stockId(randomString(6))
+//                .limitUpPrice(randomDouble())
+//                .limitDownPrice(randomDouble())
+//                .marketTime(new Date(System.currentTimeMillis()))
+//                .build();
+//    }
 
-    private Double randomDouble() {
-
-        return random.nextDouble() * 100;
-    }
-
-    private String randomString(int length) {
-        final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            sb.append(characters.charAt(random.nextInt(characters.length())));
-        }
-        return sb.toString();
-    }
+//    private Double randomDouble() {
+//
+//        return random.nextDouble() * 100;
+//    }
+//
+//    private String randomString(int length) {
+//        final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+//        StringBuilder sb = new StringBuilder(length);
+//        for (int i = 0; i < length; i++) {
+//            sb.append(characters.charAt(random.nextInt(characters.length())));
+//        }
+//        return sb.toString();
+//    }
 }
