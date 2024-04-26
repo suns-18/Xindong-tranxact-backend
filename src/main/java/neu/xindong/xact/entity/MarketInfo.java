@@ -25,4 +25,5 @@ public class MarketInfo {
     private Double yesterdayCollectionPrice;
     private Double limitUpPrice;
     private Double limitDownPrice;
+    private Integer availableQuantity;
 }
