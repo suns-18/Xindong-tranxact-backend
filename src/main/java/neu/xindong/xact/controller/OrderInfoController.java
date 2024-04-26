@@ -118,7 +118,8 @@ public class OrderInfoController {
                     .build();
             orderInfoService.doOrder(orderInfo);
             primeAccountService.reduceBalanceUsableByOrder(orderInfo);
-            if (orderInfo.getTrdId() == "S") positionService.reduceShareByOrder(position, orderInfo);
+            if (orderInfo.getTrdId().equals("S"))
+                positionService.reduceShareByOrder(position, orderInfo);
             return HttpResponse.success();
         } catch (Exception e) {
             e.printStackTrace();
