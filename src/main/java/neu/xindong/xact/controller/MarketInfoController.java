@@ -25,7 +25,7 @@ public class MarketInfoController {
     public HttpResponse<MarketInfo> getByStockId(@RequestParam String id) {
         try {
             return HttpResponse.success(
-                    repo.findByStockCode(id).orElse(null));
+                    repo.findByStockId(id).orElse(null));
         } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
