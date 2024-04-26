@@ -30,7 +30,7 @@ MySQL在Windows平台大小写不敏感
 | id_number        | varchar(255) | NOT NULL    | 证件号码                            |
 | cuacct_cls       | int          | NOT NULL    | 资产账户类别 （0 散户；1 中户；2 大户；3 机构 ）   |
 | cuacct_status    | int          | NOT NULL    | 资产账户状态 （0 正常； 1 冻结； 8 异常； 9 注销） |
-| id            ~~ | nt           | PRIMARY KEY | 客户代码（自动生成）~~                    |
+| id            ~~ | int          | PRIMARY KEY | 客户代码（自动生成）~~                    |
 
 ### 2. stock
 
@@ -142,20 +142,22 @@ MySQL在Windows平台大小写不敏感
 
 ### 9. position
 
-持仓信息（股份可用=股份余额-冻结数量+解冻数量）（#股份冻结数量=委托表的委托数量）（#股份解冻数量=委托表的委托数量-委托表的成交数量）
+持仓信息（股份可用=股份余额-冻结数量+解冻数量）（股份冻结数量=委托表的委托数量）（股份解冻数量=委托表的委托数量-委托表的成交数量）
 
 
 
-| 字段名               | 字段类型           | 约束          | 字段描述               |
-|-------------------|----------------|-------------|--------------------|
-| id                | int            | PRIMARY KEY | 持仓ID               |
-| prime_account_id  | int            |             | 资金账号               |
-| follow_account_id | varchar(10)    | NOT NULL    | 交易所证券账户            |
-| stock_id          | varchar(10)    | NOT NULL    | 证券代码               |
-| market            | int            | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
-| update_time       | timestamp      | NOT NULL    | 更新时间               |
-| share_total       | int            |             | 股份余额               |
-| share_usable      | int            |             | 股份可用               |
+| 字段名                   | 字段类型        | 约束          | 字段描述               |
+|-----------------------|-------------|-------------|--------------------|
+| id                    | int         | PRIMARY KEY | 持仓ID               |
+| prime_account_id      | int         |             | 资金账号               |
+| follow_account_id     | varchar(10) | NOT NULL    | 交易所证券账户            |
+| stock_id              | varchar(10) | NOT NULL    | 证券代码               |
+| market                | int         | NOT NULL    | 交易市场 （0 深交所；1 上交所） |
+| update_time           | timestamp   | NOT NULL    | 更新时间               |
+| share_total           | int         |             | 股份余额               |
+| share_usable          | int         |             | 股份可用               |
+| unfrozen_share_amount | int         |             | 股份解冻数量             |
+| frozen_share_amount   | int         |             | 股份冻结数量             |
 
 ### 10. transaction
 
