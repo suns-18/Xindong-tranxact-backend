@@ -10,6 +10,7 @@ public interface OrderInfoService extends IService<OrderInfo> {
     List<OrderInfo> findOrderInfoByPrimeAccountId(Integer primeAccountId);
 
     List<OrderInfo> findOrderInfoByPrimeAccountIdToDeal(Integer primeAccountId);
+    List<OrderInfo> findOrderInfoByPrimeAccountIdWithdraw(Integer primeAccountId);
 
     boolean doOrder(OrderInfo orderInfo);
 

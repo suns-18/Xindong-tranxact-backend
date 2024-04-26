@@ -10,17 +10,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
         implements OrderInfoService {
     @Override
     public List<OrderInfo> findOrderInfoByPrimeAccountId(Integer primeAccountId) {
-        return query().eq("prime_account_id",primeAccountId).list();
+        return query()
+                .eq("prime_account_id", primeAccountId)
+                .orderByDesc("order_time")
+                .list();
     }
 
     @Override
     public List<OrderInfo> findOrderInfoByPrimeAccountIdToDeal(Integer primeAccountId) {
-        return query().eq("prime_account_id",primeAccountId).eq("order_status","2").eq("is_withdraw",0).list();
+        return query()
+                .eq("prime_account_id", primeAccountId)
+                .eq("order_status", "2")
+                .eq("is_withdraw", 0)
+                .orderByDesc("order_time")
+                .list();
+    }
+
+    @Override
+    public List<OrderInfo> findOrderInfoByPrimeAccountIdWithdraw(Integer primeAccountId) {
+        return query()
+                .eq("prime_account_id", primeAccountId)
+                .eq("is_withdraw", 1)
+                .orderByDesc("order_time")
+                .list();
     }
 
     @Override
@@ -46,7 +64,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
     public boolean updateOrderInfoByDeal(OrderInfo orderInfo, Transaction transaction) {
         orderInfo.setDealAmount(transaction.getAmount());
         orderInfo.setDealPrice(transaction.getPrice());
-        if(orderInfo.getOrderAmount()==orderInfo.getDealAmount())orderInfo.setOrderStatus("8");
+        if (orderInfo.getOrderAmount() == orderInfo.getDealAmount()) orderInfo.setOrderStatus("8");
         return updateById(orderInfo);
     }
 }
