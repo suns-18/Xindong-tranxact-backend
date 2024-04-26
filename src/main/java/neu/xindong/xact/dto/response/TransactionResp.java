@@ -7,7 +7,6 @@ import neu.xindong.xact.entity.Transaction;
 @Data
 public class TransactionResp {
     private Transaction transaction;
-    private Integer primeAccountId;
     private String followAccountId;
     private String trdId;
     private Integer tradeUnit;

@@ -17,6 +17,7 @@ public class Transaction {
     @TableId
     private Integer id;
     private Integer orderId;
+    private Integer primeAccountId;
     private Integer amount;
     private Double price;
     private Date transactTime;

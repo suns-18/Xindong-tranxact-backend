@@ -295,6 +295,7 @@ INSERT INTO `trade_unit` VALUES (55555);
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
+  `prime_account_id` int(0) NULL DEFAULT NULL,
   `order_id` int(0) NULL DEFAULT NULL,
   `amount` int(0) NULL DEFAULT NULL,
   `price` decimal(20, 4) NULL DEFAULT NULL,
@@ -305,7 +306,7 @@ CREATE TABLE `transaction`  (
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
-INSERT INTO `transaction` VALUES (1, 333333, 100, 1.5600, '2024-04-26 11:37:01');
+INSERT INTO `transaction` VALUES (1, 44444444,333333, 100, 1.5600, '2024-04-26 11:37:01');
 
 -- ----------------------------
 -- View structure for customer_bank

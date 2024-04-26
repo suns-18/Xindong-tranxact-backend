@@ -167,6 +167,7 @@ MySQL在Windows平台大小写不敏感
 | 字段名               | 字段类型        | 约束          | 字段描述            |
 |-------------------|-------------|-------------|-----------------|
 | id                | int         | PRIMARY KEY | 成交ID            |
+| prime_account_id      | int         |             | 资金账号               |
 | order_id          | int         |             | 委托编号            |
 | amount            | int         |             | 成交数量            |
 | price             | decimal(.4) |             | 成交价格            |

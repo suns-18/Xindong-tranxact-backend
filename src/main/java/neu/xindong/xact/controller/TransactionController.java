@@ -10,6 +10,7 @@ import neu.xindong.xact.entity.Position;
 import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.entity.Transaction;
 import neu.xindong.xact.service.*;
+import neu.xindong.xact.util.RegisterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,6 @@ public class TransactionController {
                 var transactionResp = TransactionResp
                         .builder()
                         .transaction(transaction)
-                        .primeAccountId(primeAccountId)
                         .followAccountId(orderInfo.getFollowAccountId())
                         .trdId(orderInfo.getTrdId())
                         .tradeUnit(orderInfo.getUnit())
@@ -69,6 +69,7 @@ public class TransactionController {
             Position position = positionService.findPositionByStockId(stock.getId(), orderInfo.getPrimeAccountId());
 
             Transaction transaction = Transaction.builder()
+                    .id(RegisterUtil.createOrderId())
                     .price(transactionRequest.getPrice())
                     .amount(transactionRequest.getAmount())
                     .build();
