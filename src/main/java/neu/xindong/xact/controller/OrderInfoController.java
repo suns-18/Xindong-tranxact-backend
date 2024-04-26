@@ -135,7 +135,7 @@ public class OrderInfoController {
             Position position = positionService.findPositionByStockId(orderInfo.getStockId(), orderInfo.getPrimeAccountId());
             orderInfoService.withdrawOrder(orderInfo);
             primeAccountService.increaseBalanceUsableByOrder(orderInfo);
-            if (orderRequest.getOrderInfo().getTrdId() == "S") positionService.increaseShareByOrder(position);
+            if (orderRequest.getOrderInfo().getTrdId().equals("S")) positionService.increaseShareByOrder(position);
             return HttpResponse.success();
         } catch (Exception e) {
             e.printStackTrace();
