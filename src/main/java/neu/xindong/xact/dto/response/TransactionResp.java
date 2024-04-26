@@ -9,7 +9,7 @@ public class TransactionResp {
     private Transaction transaction;
     private Integer primeAccountId;
     private String followAccountId;
-    private char trdId;
+    private String trdId;
     private Integer tradeUnit;
     private Double transactionBalance;//(#成交金额=成交数量*成交价格)
 }

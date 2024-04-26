@@ -21,10 +21,10 @@ public class OrderInfo {
     private String followAccountId;
     private String stkCls;
     private Double rate;
-    private char trdId;
+    private String trdId;
     private String stockId;
     private Date orderTime;
-    private char orderStatus;
+    private String orderStatus;
     private Integer orderAmount;
     private Double orderPrice;
     private Integer dealAmount;

@@ -76,7 +76,7 @@ public class TransactionController {
             primeAccountService.changeBalanceTotalByDeal(transaction2,orderInfo,stock);
             orderInfoService.updateOrderInfoByDeal(orderInfo,transaction2);
             //成交买
-            if(orderInfo.getTrdId()=='B'){
+            if(orderInfo.getTrdId()=="B"){
                 positionService.increaseShareByDeal(position,stock,orderInfo,transaction);
             }else{//成交卖
                 positionService.reduceShareByDeal(position,transaction);

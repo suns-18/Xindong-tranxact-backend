@@ -76,7 +76,7 @@ public class OrderInfoController {
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
             List<OrderInfoResp>orderInfoResps=new ArrayList<>();
             orderInfos.forEach((orderInfo -> {
-                if(orderInfo.getOrderStatus()=='2'&&orderInfo.getIsWithdraw()==0){
+                if(orderInfo.getOrderStatus()=="2"&&orderInfo.getIsWithdraw()==0){
                     Stock stock=stockService.getById(orderInfo.getStockId());
                     var orderInfoResp=OrderInfoResp.builder()
                             .orderInfo(orderInfo)
@@ -118,7 +118,7 @@ public class OrderInfoController {
                     .build();
             orderInfoService.doOrder(orderInfo);
             primeAccountService.reduceBalanceUsableByOrder(orderInfo);
-            if(orderInfo.getTrdId()=='S')positionService.reduceShareByOrder(position,orderInfo);
+            if(orderInfo.getTrdId()=="S")positionService.reduceShareByOrder(position,orderInfo);
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();
@@ -133,13 +133,10 @@ public class OrderInfoController {
         try {
 //            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
             OrderInfo orderInfo = orderInfoService.getById(orderRequest.getOrderInfo().getId());
-            System.out.println(orderRequest.getCustomerId()+"aaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            System.out.println("---------------------------------------------------");
-            System.out.println(orderInfo.toString());
             Position position=positionService.findPositionByStockId(orderInfo.getStockId(),orderInfo.getPrimeAccountId());
             orderInfoService.withdrawOrder(orderInfo);
             primeAccountService.increaseBalanceUsableByOrder(orderInfo);
-            if(orderRequest.getOrderInfo().getTrdId()=='S')positionService.increaseShareByOrder(position);
+            if(orderRequest.getOrderInfo().getTrdId()=="S")positionService.increaseShareByOrder(position);
             return HttpResponse.success();
         }catch (Exception e) {
             e.printStackTrace();
