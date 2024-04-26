@@ -15,9 +15,9 @@ public interface MarketInfoRepository extends CrudRepository<MarketInfo, String>
     @Override
     <S extends MarketInfo> S save(S entity);
 
-    Optional<MarketInfo> findByStockCode(String s);
+    Optional<MarketInfo> findByStockId(String s);
 
-    boolean existsByStockCode(String s);
+    boolean existsByStockId(String s);
 
     Page<MarketInfo> findMarketInfosByMarketTime(Date marketTime,
                                                  Pageable page);
@@ -27,7 +27,7 @@ public interface MarketInfoRepository extends CrudRepository<MarketInfo, String>
     @Override
     long count();
 
-    void deleteByStockCode(String s);
+    void deleteByStockId(String s);
 
     @Override
     void delete(MarketInfo entity);
