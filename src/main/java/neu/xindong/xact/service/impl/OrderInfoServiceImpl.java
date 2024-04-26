@@ -62,7 +62,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
 
     @Override
     public boolean updateOrderInfoByDeal(OrderInfo orderInfo, Transaction transaction) {
-        orderInfo.setDealAmount(transaction.getAmount());
+        orderInfo.setDealAmount(orderInfo.getDealAmount()+transaction.getAmount());
         orderInfo.setDealPrice(transaction.getPrice());
         if (orderInfo.getOrderAmount() == orderInfo.getDealAmount()) orderInfo.setOrderStatus("8");
         return updateById(orderInfo);
