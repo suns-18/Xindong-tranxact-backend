@@ -68,6 +68,34 @@ public class OrderInfoController {
         }
     }
 
+    @GetMapping("/getByPrimeAccountIdToDeal")
+    @Operation(summary = "根据主账户获取可以进行成交的委托",
+            description = "返回可以进行成交的委托")
+    public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountIdToDeal(@RequestParam Integer primeAccountId) {
+        try {
+            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
+            List<OrderInfoResp>orderInfoResps=new ArrayList<>();
+            orderInfos.forEach((orderInfo -> {
+                if(orderInfo.getOrderStatus()=='2'&&orderInfo.getIsWithdraw()==0){
+                    Stock stock=stockService.getById(orderInfo.getStockId());
+                    var orderInfoResp=OrderInfoResp.builder()
+                            .orderInfo(orderInfo)
+                            .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
+                            .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
+                            .frozenBalance(orderInfo.getOrderPrice())
+                            .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
+                            .currency(stock.getCurrency())
+                            .build();
+                    orderInfoResps.add(orderInfoResp);
+                }
+            }));
+            return HttpResponse.success(orderInfoResps);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failureWhenAccessDB();
+        }
+    }
+
     @PostMapping("/doOrder")
     @Operation(summary = "做委托",
             description = "作委托")
