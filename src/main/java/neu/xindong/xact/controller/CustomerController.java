@@ -6,6 +6,7 @@ import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.AccountRegisterRequest;
 import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.entity.FollowAccount;
+import neu.xindong.xact.entity.PrimeAccount;
 import neu.xindong.xact.service.BankService;
 import neu.xindong.xact.service.CustomerService;
 import neu.xindong.xact.service.FollowAccountService;
@@ -18,8 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-import static neu.xindong.xact.util.RegisterUtil.createFollowAccountId;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -94,6 +93,7 @@ public class CustomerController {
     public HttpResponse<Object> saveCustomer(
             @RequestBody AccountRegisterRequest request) {
         try {
+            Date time = new Date();
             System.out.println(request.getMarket());
             // 使用流式编程创建 FollowAccount 列表
             List<FollowAccount> followAccounts = request.getMarket().stream()
@@ -109,12 +109,18 @@ public class CustomerController {
                             // balanceTotal和balanceUsable在这里是useless，根据实际情况设置
                             .build())
                     .collect(Collectors.toList());
+            PrimeAccount primeAccount = PrimeAccount.builder()
+                    .id(request.getCustomer().getId())
+                    .password(request.getPrimeAccount().getPassword())
+                    .cuacctCls(request.getPrimeAccount().getCuacctCls())
+                    .updateTime(time)
+                    .build();
             //确保一致
             request.getBank().setCustomerId(request.getCustomer().getId());
             request.getPrimeAccount().setId(request.getCustomer().getId());
             customerService.save(request.getCustomer());
             bankService.save(request.getBank());
-            primeAccountService.save(request.getPrimeAccount());
+            primeAccountService.save(primeAccount);
             followAccountService.saveBatch(followAccounts);
             return HttpResponse.success();
         } catch (Exception e) {
