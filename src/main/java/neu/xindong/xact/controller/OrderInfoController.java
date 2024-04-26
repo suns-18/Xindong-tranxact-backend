@@ -36,7 +36,7 @@ public class OrderInfoController {
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountId(@RequestParam Integer primeAccountId) {
         try {
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
-            List<OrderInfoResp>orderInfoResps=new ArrayList<>();
+            List<OrderInfoResp> orderInfoResps = new ArrayList<>();
 //            for(OrderInfo orderInfo:orderInfos){
 //                Stock stock=stockService.findStockById(orderInfo.getStockId());
 //                OrderInfoResp orderInfoResp=OrderInfoResp.builder()
@@ -50,13 +50,13 @@ public class OrderInfoController {
 //                orderInfoResps.add(orderInfoResp);
 //            }
             orderInfos.forEach((orderInfo -> {
-                Stock stock=stockService.getById(orderInfo.getStockId());
-                var orderInfoResp=OrderInfoResp.builder()
+                Stock stock = stockService.getById(orderInfo.getStockId());
+                var orderInfoResp = OrderInfoResp.builder()
                         .orderInfo(orderInfo)
-                        .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
-                        .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
+                        .orderBalance(orderInfo.getOrderPrice() * orderInfo.getOrderPrice())
+                        .dealBalance(orderInfo.getDealPrice() * orderInfo.getDealAmount())
                         .frozenBalance(orderInfo.getOrderPrice())
-                        .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
+                        .unfrozenBalance(orderInfo.getOrderPrice() - orderInfo.getDealPrice())
                         .currency(stock.getCurrency())
                         .build();
                 orderInfoResps.add(orderInfoResp);
@@ -74,16 +74,16 @@ public class OrderInfoController {
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountIdToDeal(@RequestParam Integer primeAccountId) {
         try {
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
-            List<OrderInfoResp>orderInfoResps=new ArrayList<>();
+            List<OrderInfoResp> orderInfoResps = new ArrayList<>();
             orderInfos.forEach((orderInfo -> {
-                if(orderInfo.getOrderStatus()=="2"&&orderInfo.getIsWithdraw()==0){
-                    Stock stock=stockService.getById(orderInfo.getStockId());
-                    var orderInfoResp=OrderInfoResp.builder()
+                if (orderInfo.getOrderStatus() == "2" && orderInfo.getIsWithdraw() == 0) {
+                    Stock stock = stockService.getById(orderInfo.getStockId());
+                    var orderInfoResp = OrderInfoResp.builder()
                             .orderInfo(orderInfo)
-                            .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
-                            .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
+                            .orderBalance(orderInfo.getOrderPrice() * orderInfo.getOrderPrice())
+                            .dealBalance(orderInfo.getDealPrice() * orderInfo.getDealAmount())
                             .frozenBalance(orderInfo.getOrderPrice())
-                            .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
+                            .unfrozenBalance(orderInfo.getOrderPrice() - orderInfo.getDealPrice())
                             .currency(stock.getCurrency())
                             .build();
                     orderInfoResps.add(orderInfoResp);
@@ -104,7 +104,7 @@ public class OrderInfoController {
             Stock stock = stockService.getById(orderRequest.getOrderInfo().getStockId());
             Customer customer = customerService.findCustomerById(orderRequest.getCustomerId());
             Commission commission = commissionService.findCommissionByCuacctclsAndMarket(customer.getCuacctCls());
-            Position position=positionService.findPositionByStockId(stock.getId(),orderRequest.getCustomerId());
+            Position position = positionService.findPositionByStockId(stock.getId(), orderRequest.getCustomerId());
             OrderInfo orderInfo = OrderInfo.builder()
                     .unit(orderRequest.getOrderInfo().getUnit())
                     .primeAccountId(orderRequest.getCustomerId())
@@ -118,9 +118,9 @@ public class OrderInfoController {
                     .build();
             orderInfoService.doOrder(orderInfo);
             primeAccountService.reduceBalanceUsableByOrder(orderInfo);
-            if(orderInfo.getTrdId()=="S")positionService.reduceShareByOrder(position,orderInfo);
+            if (orderInfo.getTrdId() == "S") positionService.reduceShareByOrder(position, orderInfo);
             return HttpResponse.success();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failure(0, "数据库访问错误");
         }
@@ -133,12 +133,12 @@ public class OrderInfoController {
         try {
 //            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
             OrderInfo orderInfo = orderInfoService.getById(orderRequest.getOrderInfo().getId());
-            Position position=positionService.findPositionByStockId(orderInfo.getStockId(),orderInfo.getPrimeAccountId());
+            Position position = positionService.findPositionByStockId(orderInfo.getStockId(), orderInfo.getPrimeAccountId());
             orderInfoService.withdrawOrder(orderInfo);
             primeAccountService.increaseBalanceUsableByOrder(orderInfo);
-            if(orderRequest.getOrderInfo().getTrdId()=="S")positionService.increaseShareByOrder(position);
+            if (orderRequest.getOrderInfo().getTrdId() == "S") positionService.increaseShareByOrder(position);
             return HttpResponse.success();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failure(0, "数据库访问错误");
         }
