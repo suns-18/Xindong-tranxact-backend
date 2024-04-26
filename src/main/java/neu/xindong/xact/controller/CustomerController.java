@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.dto.request.AccountRegisterRequest;
+import neu.xindong.xact.entity.Bank;
 import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.entity.FollowAccount;
 import neu.xindong.xact.entity.PrimeAccount;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static neu.xindong.xact.util.RegisterUtil.createBankId;
 
 
 @RestController
@@ -111,15 +114,21 @@ public class CustomerController {
                     .collect(Collectors.toList());
             PrimeAccount primeAccount = PrimeAccount.builder()
                     .id(request.getCustomer().getId())
-                    .password(request.getPrimeAccount().getPassword())
-                    .cuacctCls(request.getPrimeAccount().getCuacctCls())
+                    .password(String.valueOf(request.getBank().getPassword()))
+                    .cuacctCls(request.getCustomer().getCuacctCls())
                     .updateTime(time)
                     .build();
+            Bank bank = Bank.builder()
+                    .customerId(request.getCustomer().getId())
+                            .bankName(request.getBank().getBankName())
+                                    .password(request.getBank().getPassword())
+                                            .account(request.getBank().getAccount())
+                                                    .id(createBankId()).build();
+
             //确保一致
-            request.getBank().setCustomerId(request.getCustomer().getId());
             request.getPrimeAccount().setId(request.getCustomer().getId());
             customerService.save(request.getCustomer());
-            bankService.save(request.getBank());
+            bankService.save(bank);
             primeAccountService.save(primeAccount);
             followAccountService.saveBatch(followAccounts);
             return HttpResponse.success();

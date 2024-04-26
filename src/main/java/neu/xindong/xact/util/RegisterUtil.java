@@ -19,6 +19,12 @@ public class RegisterUtil {
         DecimalFormat decimalFormat = new DecimalFormat("0000000");//不足7位的前面补0
         return Integer.parseInt(decimalFormat.format(randomNumber));
     }
+    public static Integer createBankId() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(900000); // 生成0至8999999之间的随机数
+        DecimalFormat decimalFormat = new DecimalFormat("000000");//不足7位的前面补0
+        return Integer.parseInt(decimalFormat.format(randomNumber));
+    }
 
     //工具方法：生成从账户：一个固定10位的随机字符串ID
     public static String createFollowAccountId(int market, int cls) {
