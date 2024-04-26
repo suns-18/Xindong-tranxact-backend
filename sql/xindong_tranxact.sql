@@ -51,7 +51,6 @@ INSERT INTO `bank` VALUES (1111888, 111, '111', '111', 1);
 DROP TABLE IF EXISTS `commission`;
 CREATE TABLE `commission`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
-  `prime_account_id` int(0) NULL DEFAULT NULL,
   `cuacct_cls` int(0) NULL DEFAULT NULL,
   `market` int(0) NULL DEFAULT NULL,
   `stk_cls` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -62,14 +61,14 @@ CREATE TABLE `commission`  (
 -- ----------------------------
 -- Records of commission
 -- ----------------------------
-INSERT INTO `commission` VALUES (1, 31355654, 0, 0, 'S0', 0.0010);
-INSERT INTO `commission` VALUES (2, 31355654, 0, 1, 'S0', 0.0010);
-INSERT INTO `commission` VALUES (3, 11111111, 1, 0, 'S0', 0.0008);
-INSERT INTO `commission` VALUES (4, 11111111, 1, 1, 'S0', 0.0008);
-INSERT INTO `commission` VALUES (5, 22222222, 2, 0, 'S0', 0.0006);
-INSERT INTO `commission` VALUES (6, 22222222, 2, 1, 'S0', 0.0006);
-INSERT INTO `commission` VALUES (7, 33333333, 3, 0, 'S0', 0.0003);
-INSERT INTO `commission` VALUES (8, 33333333, 3, 1, 'S0', 0.0003);
+INSERT INTO `commission` VALUES (1,  0, 0, 'S0', 0.0010);
+INSERT INTO `commission` VALUES (2,  0, 1, 'S0', 0.0010);
+INSERT INTO `commission` VALUES (3,  1, 0, 'S0', 0.0008);
+INSERT INTO `commission` VALUES (4,  1, 1, 'S0', 0.0008);
+INSERT INTO `commission` VALUES (5,  2, 0, 'S0', 0.0006);
+INSERT INTO `commission` VALUES (6,  2, 1, 'S0', 0.0006);
+INSERT INTO `commission` VALUES (7,  3, 0, 'S0', 0.0003);
+INSERT INTO `commission` VALUES (8,  3, 1, 'S0', 0.0003);
 
 -- ----------------------------
 -- Table structure for customer
@@ -296,6 +295,7 @@ INSERT INTO `trade_unit` VALUES (55555);
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
+  `prime_account_id` int(0) NULL DEFAULT NULL,
   `order_id` int(0) NULL DEFAULT NULL,
   `amount` int(0) NULL DEFAULT NULL,
   `price` decimal(20, 4) NULL DEFAULT NULL,
@@ -306,7 +306,7 @@ CREATE TABLE `transaction`  (
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
-INSERT INTO `transaction` VALUES (1, 333333, 100, 1.5600, '2024-04-26 11:37:01');
+INSERT INTO `transaction` VALUES (1, 44444444,333333, 100, 1.5600, '2024-04-26 11:37:01');
 
 -- ----------------------------
 -- View structure for customer_bank

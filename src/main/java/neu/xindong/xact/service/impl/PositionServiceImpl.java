@@ -55,14 +55,16 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     @Override
     //成交买 余额=余额+成交 可用=可用+成交
     public boolean increaseShareByDeal(Position position, Stock stock, OrderInfo orderInfo, Transaction transaction) {
-        if (position.getId() == null) {//之前没买过
-            position.setId(RegisterUtil.createOrderId());
-            position.setPrimeAccountId(orderInfo.getPrimeAccountId());
-            position.setFollowAccountId(orderInfo.getFollowAccountId());
-            position.setMarket(stock.getMarket());
-            position.setStockId(stock.getId());
-            position.setShareTotal(transaction.getAmount());
-            position.setShareUsable(transaction.getAmount());
+        if (position == null) {//之前没买过
+            position = Position.builder()
+                    .id(RegisterUtil.createOrderId())
+                    .primeAccountId(orderInfo.getPrimeAccountId())
+                    .followAccountId(orderInfo.getFollowAccountId())
+                    .market(stock.getMarket())
+                    .stockId(stock.getId())
+                    .shareTotal(transaction.getAmount())
+                    .shareUsable(transaction.getAmount())
+                    .build();
         } else {//之前买过
             position.setShareTotal(position.getShareTotal() + transaction.getAmount());
             position.setShareUsable(position.getShareUsable() + transaction.getAmount());

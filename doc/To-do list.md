@@ -1,4 +1,10 @@
 # TODO-LIST
+
+## 04-27
+1. 做委托的pAccount 资金余额需要扣掉佣金
+2. 恢复数据库表transaction 的 prime_account_id字段
+3. 撤单后prime余额错误
+
 ## 04-26
 
 1. MarkInfo添加对应证券产品的行情信息

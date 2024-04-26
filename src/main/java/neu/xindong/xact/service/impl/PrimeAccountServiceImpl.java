@@ -31,6 +31,7 @@ public class PrimeAccountServiceImpl extends ServiceImpl<PrimeAccountDao, PrimeA
             primeAccount.setBalanceUsable(primeAccount.getBalanceUsable() -
                     orderInfo.getRate() * orderInfo.getOrderAmount() * orderInfo.getOrderPrice());
         }
+        primeAccount.setBalanceTotal(primeAccount.getBalanceTotal()- orderInfo.getRate() * orderInfo.getOrderAmount() * orderInfo.getOrderPrice());
         return updateById(primeAccount);
     }
 
