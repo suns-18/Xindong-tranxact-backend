@@ -18,6 +18,11 @@ public class OrderInfoServiceTest {
         List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(31355654);
         orderInfos.stream().forEach(System.out::println);
     }
+    @Test
+    public void findOrderInfoByPrimeAccountIdToDealTest(){
+        List<OrderInfo>orderInfos=orderInfoService.findOrderInfoByPrimeAccountIdToDeal(31355654);
+        orderInfos.stream().forEach(System.out::println);
+    }
 
     @Test
     public void doOrderTest() {

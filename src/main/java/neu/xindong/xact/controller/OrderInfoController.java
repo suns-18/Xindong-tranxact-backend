@@ -36,32 +36,7 @@ public class OrderInfoController {
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountId(@RequestParam Integer primeAccountId) {
         try {
             List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
-            List<OrderInfoResp>orderInfoResps=new ArrayList<>();
-//            for(OrderInfo orderInfo:orderInfos){
-//                Stock stock=stockService.findStockById(orderInfo.getStockId());
-//                OrderInfoResp orderInfoResp=OrderInfoResp.builder()
-//                        .orderInfo(orderInfo)
-//                        .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
-//                        .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
-//                        .frozenBalance(orderInfo.getOrderPrice())
-//                        .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
-//                        .currency(stock.getCurrency())
-//                        .build();
-//                orderInfoResps.add(orderInfoResp);
-//            }
-            orderInfos.forEach((orderInfo -> {
-                Stock stock=stockService.getById(orderInfo.getStockId());
-                var orderInfoResp=OrderInfoResp.builder()
-                        .orderInfo(orderInfo)
-                        .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
-                        .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
-                        .frozenBalance(orderInfo.getOrderPrice())
-                        .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
-                        .currency(stock.getCurrency())
-                        .build();
-                orderInfoResps.add(orderInfoResp);
-            }));
-            return HttpResponse.success(orderInfoResps);
+            return getListHttpResponse(orderInfos);
         } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
@@ -73,28 +48,27 @@ public class OrderInfoController {
             description = "返回可以进行成交的委托")
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountIdToDeal(@RequestParam Integer primeAccountId) {
         try {
-            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
-            List<OrderInfoResp>orderInfoResps=new ArrayList<>();
-            orderInfos.forEach((orderInfo -> {
-                if(orderInfo.getOrderStatus()=='2'&&orderInfo.getIsWithdraw()==0){
-                    Stock stock=stockService.getById(orderInfo.getStockId());
-                    var orderInfoResp=OrderInfoResp.builder()
-                            .orderInfo(orderInfo)
-                            .orderBalance(orderInfo.getOrderPrice()*orderInfo.getOrderPrice())
-                            .dealBalance(orderInfo.getDealPrice()*orderInfo.getDealAmount())
-                            .frozenBalance(orderInfo.getOrderPrice())
-                            .unfrozenBalance(orderInfo.getOrderPrice()-orderInfo.getDealPrice())
-                            .currency(stock.getCurrency())
-                            .build();
-                    orderInfoResps.add(orderInfoResp);
-                }
-            }));
-            return HttpResponse.success(orderInfoResps);
+            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountIdToDeal(primeAccountId);
+            return getListHttpResponse(orderInfos);
         } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
         }
     }
+
+    @GetMapping("/getByPrimeAccountIdWithdraw")
+    @Operation(summary = "根据主账户获取可以进行成交的委托",
+            description = "返回可以进行成交的委托")
+    public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountIdWithdraw(@RequestParam Integer primeAccountId) {
+        try {
+            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountIdWithdraw(primeAccountId);
+            return getListHttpResponse(orderInfos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return HttpResponse.failureWhenAccessDB();
+        }
+    }
+
 
     @PostMapping("/doOrder")
     @Operation(summary = "做委托",
@@ -104,7 +78,7 @@ public class OrderInfoController {
             Stock stock = stockService.getById(orderRequest.getOrderInfo().getStockId());
             Customer customer = customerService.findCustomerById(orderRequest.getCustomerId());
             Commission commission = commissionService.findCommissionByCuacctclsAndMarket(customer.getCuacctCls());
-            Position position=positionService.findPositionByStockId(stock.getId(),orderRequest.getCustomerId());
+            Position position = positionService.findPositionByStockId(stock.getId(), orderRequest.getCustomerId());
             OrderInfo orderInfo = OrderInfo.builder()
                     .unit(orderRequest.getOrderInfo().getUnit())
                     .primeAccountId(orderRequest.getCustomerId())
@@ -118,9 +92,10 @@ public class OrderInfoController {
                     .build();
             orderInfoService.doOrder(orderInfo);
             primeAccountService.reduceBalanceUsableByOrder(orderInfo);
-            if(orderInfo.getTrdId()=='S')positionService.reduceShareByOrder(position,orderInfo);
+            if (orderInfo.getTrdId().equals("S"))
+                positionService.reduceShareByOrder(position, orderInfo);
             return HttpResponse.success();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failure(0, "数据库访问错误");
         }
@@ -129,22 +104,37 @@ public class OrderInfoController {
     @PostMapping("/withdrawOrder")
     @Operation(summary = "撤销委托",
             description = "撤销委托")
-    public HttpResponse<Object> withdrawOrderByPrimeAccountId(@RequestBody OrderRequest orderRequest) {
+    public HttpResponse<Object> withdrawOrderByPrimeAccountId(
+            @RequestBody OrderRequest orderRequest) {
         try {
 //            OrderInfo orderInfo = orderInfoService.getById(orderRequest.getCustomerId());
             OrderInfo orderInfo = orderInfoService.getById(orderRequest.getOrderInfo().getId());
-            System.out.println(orderRequest.getCustomerId()+"aaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            System.out.println("---------------------------------------------------");
-            System.out.println(orderInfo.toString());
-            Position position=positionService.findPositionByStockId(orderInfo.getStockId(),orderInfo.getPrimeAccountId());
+            Position position = positionService.findPositionByStockId(orderInfo.getStockId(), orderInfo.getPrimeAccountId());
             orderInfoService.withdrawOrder(orderInfo);
             primeAccountService.increaseBalanceUsableByOrder(orderInfo);
-            if(orderRequest.getOrderInfo().getTrdId()=='S')positionService.increaseShareByOrder(position);
+            if (orderRequest.getOrderInfo().getTrdId().equals("S"))
+                positionService.increaseShareByOrder(position);
             return HttpResponse.success();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failure(0, "数据库访问错误");
         }
     }
 
+    private HttpResponse<List<OrderInfoResp>> getListHttpResponse(List<OrderInfo> orders) {
+        List<OrderInfoResp> orderInfoResps = new ArrayList<>();
+        orders.forEach((orderInfo -> {
+            Stock stock = stockService.getById(orderInfo.getStockId());
+            var orderInfoResp = OrderInfoResp.builder()
+                    .orderInfo(orderInfo)
+                    .orderBalance(orderInfo.getOrderPrice() * orderInfo.getOrderPrice())
+                    .dealBalance(orderInfo.getDealPrice() * orderInfo.getDealAmount())
+                    .frozenBalance(orderInfo.getOrderPrice())
+                    .unfrozenBalance(orderInfo.getOrderPrice() - orderInfo.getDealPrice())
+                    .currency(stock.getCurrency())
+                    .build();
+            orderInfoResps.add(orderInfoResp);
+        }));
+        return HttpResponse.success(orderInfoResps);
+    }
 }

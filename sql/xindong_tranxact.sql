@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : wangwenqing
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 80036 (8.0.36)
+ Source Server Version : 80031
  Source Host           : localhost:3306
  Source Schema         : xindong_tranxact
 
  Target Server Type    : MySQL
- Target Server Version : 80036 (8.0.36)
+ Target Server Version : 80031
  File Encoding         : 65001
 
- Date: 26/04/2024 13:15:37
+ Date: 26/04/2024 21:04:48
 */
 
 SET NAMES utf8mb4;
@@ -22,11 +22,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `bank`;
 CREATE TABLE `bank`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `customer_id` int NOT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(0) NOT NULL,
   `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `password` int NULL DEFAULT NULL,
+  `password` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1111889 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -50,10 +50,10 @@ INSERT INTO `bank` VALUES (1111888, 111, '111', '111', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `commission`;
 CREATE TABLE `commission`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `prime_account_id` int NULL DEFAULT NULL,
-  `cuacct_cls` int NULL DEFAULT NULL,
-  `market` int NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `prime_account_id` int(0) NULL DEFAULT NULL,
+  `cuacct_cls` int(0) NULL DEFAULT NULL,
+  `market` int(0) NULL DEFAULT NULL,
   `stk_cls` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `rate` decimal(20, 4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -76,12 +76,12 @@ INSERT INTO `commission` VALUES (8, 33333333, 3, 1, 'S0', 0.0003);
 -- ----------------------------
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `id_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `id_number` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `cuacct_cls` int NULL DEFAULT NULL,
-  `cuacct_status` int NULL DEFAULT NULL,
+  `cuacct_cls` int(0) NULL DEFAULT NULL,
+  `cuacct_status` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 51395745 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -115,9 +115,9 @@ INSERT INTO `customer` VALUES (51395744, 'string', '00', '130633200203275473', 3
 DROP TABLE IF EXISTS `follow_account`;
 CREATE TABLE `follow_account`  (
   `id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `prime_account_id` int NULL DEFAULT NULL,
-  `market` int NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL,
+  `prime_account_id` int(0) NULL DEFAULT NULL,
+  `market` int(0) NULL DEFAULT NULL,
+  `update_time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -142,29 +142,29 @@ INSERT INTO `follow_account` VALUES ('B333333333', 33333333, 1, '2024-04-26 11:3
 -- ----------------------------
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `unit` int NULL DEFAULT NULL,
-  `prime_account_id` int NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `unit` int(0) NULL DEFAULT NULL,
+  `prime_account_id` int(0) NULL DEFAULT NULL,
   `follow_account_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `stk_cls` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `rate` decimal(20, 4) NULL DEFAULT NULL,
   `trd_id` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `stock_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `order_time` timestamp NULL DEFAULT NULL,
+  `order_time` timestamp(0) NULL DEFAULT NULL,
   `order_status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `order_amount` int NULL DEFAULT NULL,
+  `order_amount` int(0) NULL DEFAULT NULL,
   `order_price` decimal(20, 4) NULL DEFAULT NULL,
-  `deal_amount` int NULL DEFAULT NULL,
+  `deal_amount` int(0) NULL DEFAULT NULL,
   `deal_price` decimal(20, 4) NULL DEFAULT NULL,
-  `is_withdraw` int NULL DEFAULT NULL,
-  `withdraw_amount` int NULL DEFAULT NULL,
+  `is_withdraw` int(0) NULL DEFAULT NULL,
+  `withdraw_amount` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES (1, 22222, 31355654, '0123456789', 'S0', 0.0010, 'B', '600446', '2024-04-19 19:19:43', '0', 100, 12.8600, 100, 12.8600, 0, 0);
+INSERT INTO `order_info` VALUES (1, 22222, 31355654, '0123456789', 'S0', 0.0010, 'B', '600446', '2024-04-19 19:19:43', '2', 100, 12.8600, 100, 12.8600, 0, 0);
 INSERT INTO `order_info` VALUES (2, 33333, 11111111, 'A111111111', 'S0', 0.0010, 'S', '000858', '2024-04-19 14:57:38', '8', 1000, 136.1500, 500, 136.1600, 0, 0);
 
 -- ----------------------------
@@ -172,15 +172,15 @@ INSERT INTO `order_info` VALUES (2, 33333, 11111111, 'A111111111', 'S0', 0.0010,
 -- ----------------------------
 DROP TABLE IF EXISTS `position`;
 CREATE TABLE `position`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `prime_account_id` int NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `prime_account_id` int(0) NULL DEFAULT NULL,
   `follow_account_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `stock_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `market` int NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL,
-  `share_total` int NULL DEFAULT NULL,
-  `share_usable` int NULL DEFAULT NULL,
-  `frozen_share_amount` int NULL DEFAULT NULL,
+  `market` int(0) NULL DEFAULT NULL,
+  `update_time` timestamp(0) NULL DEFAULT NULL,
+  `share_total` int(0) NULL DEFAULT NULL,
+  `share_usable` int(0) NULL DEFAULT NULL,
+  `frozen_share_amount` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -205,12 +205,12 @@ INSERT INTO `position` VALUES (12, 33333333, 'B333333333', '000651', 1, '2024-04
 -- ----------------------------
 DROP TABLE IF EXISTS `prime_account`;
 CREATE TABLE `prime_account`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `balance_usable` decimal(20, 4) NULL DEFAULT 100000.0000,
   `balance_total` decimal(20, 4) NULL DEFAULT 100000.0000,
-  `cuacct_cls` int NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL,
-  `password` int NULL DEFAULT NULL,
+  `cuacct_cls` int(0) NULL DEFAULT NULL,
+  `update_time` timestamp(0) NULL DEFAULT NULL,
+  `password` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 51395746 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -239,7 +239,7 @@ DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock`  (
   `id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `stock_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `market` int NULL DEFAULT NULL,
+  `market` int(0) NULL DEFAULT NULL,
   `stk_cls` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `stamp` decimal(20, 3) NULL DEFAULT NULL,
   `currency` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -261,7 +261,7 @@ INSERT INTO `stock` VALUES ('601857', '中国石油', 1, 'S0', 0.001, '0');
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -277,7 +277,7 @@ INSERT INTO `sys_user` VALUES (1, 'admin', 'admin');
 -- ----------------------------
 DROP TABLE IF EXISTS `trade_unit`;
 CREATE TABLE `trade_unit`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 55556 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -295,23 +295,18 @@ INSERT INTO `trade_unit` VALUES (55555);
 -- ----------------------------
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NULL DEFAULT NULL,
-  `unit` int NULL DEFAULT NULL,
-  `prime_account_id` int NULL DEFAULT NULL,
-  `follow_account_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `trd_id` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `amount` int NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `order_id` int(0) NULL DEFAULT NULL,
+  `amount` int(0) NULL DEFAULT NULL,
   `price` decimal(20, 4) NULL DEFAULT NULL,
-  `transact_time` timestamp NULL DEFAULT NULL,
-  `stock_id` int NULL DEFAULT NULL,
+  `transact_time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
-INSERT INTO `transaction` VALUES (1, 333333, 22222, 33333333, '0333333333', 'B', 100, 1.5600, '2024-04-26 11:37:01', 1);
+INSERT INTO `transaction` VALUES (1, 333333, 100, 1.5600, '2024-04-26 11:37:01');
 
 -- ----------------------------
 -- View structure for customer_bank

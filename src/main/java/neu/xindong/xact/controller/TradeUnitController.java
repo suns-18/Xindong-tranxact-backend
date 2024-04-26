@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tradeUnit")
@@ -18,13 +19,18 @@ import java.util.List;
 public class TradeUnitController {
     @Autowired
     private TradeUnitService tradeUnitService;
+
     @GetMapping("/all")
     @Operation(summary = "获取交易单元",
             description = "返回所有交易单元")
-    public HttpResponse<List<TradeUnit>> getAllTradeUnits() {
+    public HttpResponse<List<Integer>> getAllTradeUnits() {
         try {
-            List<TradeUnit> tradeUnits=tradeUnitService.findAll();
-            return HttpResponse.success(tradeUnits);
+            List<TradeUnit> tradeUnits = tradeUnitService.findAll();
+            return HttpResponse.success(
+                    tradeUnits.stream()
+                            .mapToInt(TradeUnit::getId)
+                            .boxed()
+                            .toList());
         } catch (Exception e) {
             e.printStackTrace();
             return HttpResponse.failureWhenAccessDB();
