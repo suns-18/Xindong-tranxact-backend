@@ -73,10 +73,9 @@ public class OrderInfoController {
             description = "返回可以进行成交的委托")
     public HttpResponse<List<OrderInfoResp>> getOrderInfoByPrimeAccountIdToDeal(@RequestParam Integer primeAccountId) {
         try {
-            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountId(primeAccountId);
+            List<OrderInfo> orderInfos = orderInfoService.findOrderInfoByPrimeAccountIdToDeal(primeAccountId);
             List<OrderInfoResp> orderInfoResps = new ArrayList<>();
             orderInfos.forEach((orderInfo -> {
-                if (orderInfo.getOrderStatus() == "2" && orderInfo.getIsWithdraw() == 0) {
                     Stock stock = stockService.getById(orderInfo.getStockId());
                     var orderInfoResp = OrderInfoResp.builder()
                             .orderInfo(orderInfo)
@@ -87,7 +86,6 @@ public class OrderInfoController {
                             .currency(stock.getCurrency())
                             .build();
                     orderInfoResps.add(orderInfoResp);
-                }
             }));
             return HttpResponse.success(orderInfoResps);
         } catch (Exception e) {

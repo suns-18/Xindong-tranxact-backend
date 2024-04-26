@@ -9,6 +9,8 @@ import java.util.List;
 public interface OrderInfoService extends IService<OrderInfo> {
     List<OrderInfo> findOrderInfoByPrimeAccountId(Integer primeAccountId);
 
+    List<OrderInfo> findOrderInfoByPrimeAccountIdToDeal(Integer primeAccountId);
+
     boolean doOrder(OrderInfo orderInfo);
 
     boolean withdrawOrder(OrderInfo orderInfo);

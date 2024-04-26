@@ -19,6 +19,11 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
     }
 
     @Override
+    public List<OrderInfo> findOrderInfoByPrimeAccountIdToDeal(Integer primeAccountId) {
+        return query().eq("prime_account_id",primeAccountId).eq("order_status","2").eq("is_withdraw",0).list();
+    }
+
+    @Override
     public boolean doOrder(OrderInfo orderInfo) {
         orderInfo.setId(RegisterUtil.createOrderId());
         orderInfo.setOrderTime(new Date());
