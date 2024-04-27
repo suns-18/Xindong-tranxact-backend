@@ -128,9 +128,9 @@ public class OrderInfoController {
             var orderInfoResp = OrderInfoResp.builder()
                     .orderInfo(orderInfo)
                     .orderBalance(orderInfo.getOrderPrice() * orderInfo.getOrderPrice())
-                    .dealBalance(orderInfo.getDealPrice() * orderInfo.getDealAmount())
-                    .frozenBalance(orderInfo.getOrderPrice())
-                    .unfrozenBalance(orderInfo.getOrderPrice() - orderInfo.getDealPrice())
+//                    .dealBalance(orderInfo.getDealPrice() * orderInfo.getDealAmount())
+//                    .frozenBalance(orderInfo.getOrderPrice())
+//                    .unfrozenBalance(orderInfo.getOrderPrice() - orderInfo.getDealPrice())
                     .currency(stock.getCurrency())
                     .build();
             orderInfoResps.add(orderInfoResp);
