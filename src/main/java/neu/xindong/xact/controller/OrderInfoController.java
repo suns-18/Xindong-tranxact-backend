@@ -127,7 +127,7 @@ public class OrderInfoController {
             Stock stock = stockService.getById(orderInfo.getStockId());
             var orderInfoResp = OrderInfoResp.builder()
                     .orderInfo(orderInfo)
-                    .orderBalance(orderInfo.getOrderPrice() * orderInfo.getOrderPrice())
+                    .orderBalance(orderInfo.getOrderPrice() * orderInfo.getOrderAmount())
 //                    .dealBalance(orderInfo.getDealPrice() * orderInfo.getDealAmount())
 //                    .frozenBalance(orderInfo.getOrderPrice())
 //                    .unfrozenBalance(orderInfo.getOrderPrice() - orderInfo.getDealPrice())
