@@ -34,7 +34,7 @@ public class MarketInfoController {
         }
     }
 
-    @GetMapping("/init")
+    @PostMapping("/init")
     @Operation(summary = "初始化行情信息",
             description = "初始化行情信息，返回操作结果")
     public HttpResponse<Object> init(@RequestParam String id) {
