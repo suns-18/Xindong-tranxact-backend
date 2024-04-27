@@ -6,10 +6,7 @@ import neu.xindong.xact.entity.MarketInfo;
 import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.service.MarketInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +34,7 @@ public class MarketInfoController {
     @PostMapping("/init")
     @Operation(summary = "初始化行情信息",
             description = "初始化行情信息，返回操作结果")
-    public HttpResponse<Object> init(@RequestParam String id) {
+    public HttpResponse<Object> init() {
         try {
             List<MarketInfo> marketInfoList = new ArrayList<>();
 
