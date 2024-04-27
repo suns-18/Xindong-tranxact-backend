@@ -36,6 +36,8 @@ public class MarketInfoController {
             description = "初始化行情信息，返回操作结果")
     public HttpResponse<Object> init() {
         try {
+            repo.deleteAll();
+
             List<MarketInfo> marketInfoList = new ArrayList<>();
 
             Date marketTime = new Date();
