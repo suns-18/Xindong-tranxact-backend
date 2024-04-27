@@ -79,7 +79,7 @@ public class PositionServiceImpl extends ServiceImpl<PositionDao, Position>
     public boolean reduceShareByDeal(Position position, Transaction transaction) {
         position.setShareTotal(position.getShareTotal() - transaction.getAmount());
         position.setUpdateTime(new Date());
-        position.setFrozenShareAmount(0);
+        position.setFrozenShareAmount(position.getFrozenShareAmount()-transaction.getAmount());
         return updateById(position);
     }
 }

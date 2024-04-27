@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
@@ -64,7 +65,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoDao, OrderInfo>
     public boolean updateOrderInfoByDeal(OrderInfo orderInfo, Transaction transaction) {
         orderInfo.setDealAmount(orderInfo.getDealAmount()+transaction.getAmount());
         orderInfo.setDealPrice(transaction.getPrice());
-        if (orderInfo.getOrderAmount() == orderInfo.getDealAmount()) orderInfo.setOrderStatus("8");
+        if (Objects.equals(orderInfo.getOrderAmount(), orderInfo.getDealAmount())) orderInfo.setOrderStatus("8");
         return updateById(orderInfo);
     }
 }
