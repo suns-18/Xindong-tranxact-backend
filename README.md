@@ -3,8 +3,8 @@
 
 ## 数据库文档
 
-[Click Here](doc/database.md)
+[Click Here](.doc/database.md)
 
 ## TODO-LIST
 
-[Click Here](doc/To-do list.md)
+[Click Here](.doc/To-do%20%list.md)
