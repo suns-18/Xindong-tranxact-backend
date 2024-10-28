@@ -1,6 +1,5 @@
 package neu.xindong.xact.component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnMessage;
@@ -9,12 +8,9 @@ import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import neu.xindong.xact.dto.response.InfoMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.security.SecureRandomSpi;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

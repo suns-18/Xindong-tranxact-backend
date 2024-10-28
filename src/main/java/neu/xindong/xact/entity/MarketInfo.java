@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.util.Date;
-import org.springframework.data.redis.core.index.Indexed;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
