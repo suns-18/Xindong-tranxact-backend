@@ -7,9 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.text.DecimalFormat;
-import java.util.Random;
 @SuperBuilder
 @Data
 @AllArgsConstructor

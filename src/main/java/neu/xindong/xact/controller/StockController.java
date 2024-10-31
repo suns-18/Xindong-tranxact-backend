@@ -3,7 +3,6 @@ package neu.xindong.xact.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neu.xindong.xact.dto.HttpResponse;
-import neu.xindong.xact.entity.Customer;
 import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;

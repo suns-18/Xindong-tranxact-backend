@@ -3,7 +3,6 @@ package neu.xindong.xact.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import neu.xindong.xact.dto.HttpResponse;
 import neu.xindong.xact.entity.MarketInfo;
-import neu.xindong.xact.entity.Stock;
 import neu.xindong.xact.service.MarketInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

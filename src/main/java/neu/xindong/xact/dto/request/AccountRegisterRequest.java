@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import neu.xindong.xact.entity.Bank;
 import neu.xindong.xact.entity.Customer;
-import neu.xindong.xact.entity.FollowAccount;
 import neu.xindong.xact.entity.PrimeAccount;
 
 import java.util.List;
